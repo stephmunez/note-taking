@@ -25,6 +25,9 @@ const MenuBar = () => {
 
   const currentTheme = theme === 'system' ? systemTheme : theme;
 
+  const isActive = (route: string) =>
+    pathname === route || pathname.startsWith(`${route}/`);
+
   return (
     <footer className='fixed bottom-0 w-full bg-neutral-0 dark:bg-neutral-800 transition-colors duration-300 px-8 py-3'>
       <nav>
@@ -32,59 +35,56 @@ const MenuBar = () => {
           <li className='w-full'>
             <Link
               className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                pathname === '/' ? 'bg-blue-50' : ''
+                isActive('/') ? 'bg-blue-50' : ''
               }`}
               href='/'
             >
-              <IconHome theme={currentTheme} isActive={pathname === '/'} />
+              <IconHome theme={currentTheme} isActive={isActive('/')} />
             </Link>
           </li>
           <li className='w-full'>
             <Link
               className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                pathname === '/search' ? 'bg-blue-50' : ''
+                isActive('/search') ? 'bg-blue-50' : ''
               }`}
               href='/search'
             >
-              <IconSearch
-                theme={currentTheme}
-                isActive={pathname === '/search'}
-              />
+              <IconSearch theme={currentTheme} isActive={isActive('/search')} />
             </Link>
           </li>
           <li className='w-full'>
             <Link
               className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                pathname === '/archive' ? 'bg-blue-50' : ''
+                isActive('/archive') ? 'bg-blue-50' : ''
               }`}
               href='/archive'
             >
               <IconArchive
                 theme={currentTheme}
-                isActive={pathname === '/archive'}
+                isActive={isActive('/archive')}
               />
             </Link>
           </li>
           <li className='w-full'>
             <Link
               className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                pathname === '/tags' ? 'bg-blue-50' : ''
+                isActive('/tags') ? 'bg-blue-50' : ''
               }`}
               href='/tags'
             >
-              <IconTag theme={currentTheme} isActive={pathname === '/tags'} />
+              <IconTag theme={currentTheme} isActive={isActive('/tags')} />
             </Link>
           </li>
           <li className='w-full'>
             <Link
               className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                pathname === '/settings' ? 'bg-blue-50' : ''
+                isActive('/settings') ? 'bg-blue-50' : ''
               }`}
               href='/settings'
             >
               <IconSettings
                 theme={currentTheme}
-                isActive={pathname === '/settings'}
+                isActive={isActive('/settings')}
               />
             </Link>
           </li>
