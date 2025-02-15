@@ -1,6 +1,7 @@
 'use client';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import CreateNewNoteButton from './components/CreateNewNoteButton';
 
 export default function Home() {
   const { theme, setTheme, systemTheme } = useTheme();
@@ -16,7 +17,7 @@ export default function Home() {
   const currentTheme = theme === 'system' ? systemTheme : theme;
 
   return (
-    <main className='font-sans px-4 py-5'>
+    <main className='font-sans px-4 py-5 z-50'>
       <div className='flex flex-col w-full gap-4'>
         <h1 className='font-bold text-2xl leading-[1.2] tracking-[-0.5px]'>
           All Notes
@@ -35,6 +36,8 @@ export default function Home() {
       >
         {currentTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
       </button>
+
+      <CreateNewNoteButton />
     </main>
   );
 }
