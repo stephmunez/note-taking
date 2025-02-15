@@ -8,7 +8,6 @@ import logo from '../../assets/images/logo.svg';
 
 const Logo = () => {
   const { theme, systemTheme } = useTheme();
-  const currentTheme = theme === 'system' ? systemTheme : theme;
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -18,6 +17,8 @@ const Logo = () => {
   if (!mounted) {
     return null;
   }
+
+  const currentTheme = theme === 'system' ? systemTheme : theme;
 
   return (
     <>
