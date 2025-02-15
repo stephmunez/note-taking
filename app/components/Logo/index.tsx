@@ -1,14 +1,11 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import logoDark from '../../assets/images/logo-dark.svg';
-import logo from '../../assets/images/logo.svg';
+import IconLogo from '../IconLogo';
 
 const Logo = () => {
   const { theme, systemTheme } = useTheme();
-  const currentTheme = theme === 'system' ? systemTheme : theme;
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -19,15 +16,11 @@ const Logo = () => {
     return null;
   }
 
+  const currentTheme = theme === 'system' ? systemTheme : theme;
+
   return (
     <>
-      <Image
-        src={currentTheme === 'dark' ? logoDark : logo}
-        width={96}
-        height={28}
-        alt='note taking logo'
-        className='transition-opacity duration-300'
-      />
+      <IconLogo theme={currentTheme} />
     </>
   );
 };
