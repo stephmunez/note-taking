@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
 import { Inter, Noto_Serif, Source_Code_Pro } from 'next/font/google';
+import MenuBar from './components/MenuBar';
 import PageHeaderMobile from './components/PageHeaderMobile';
 import './globals.css';
 
@@ -37,6 +38,7 @@ export default function RootLayout({
         <ThemeProvider attribute='class' defaultTheme='system'>
           <PageHeaderMobile />
           {children}
+          <MenuBar />
         </ThemeProvider>
       </body>
     </html>
