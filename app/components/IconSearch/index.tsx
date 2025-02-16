@@ -3,7 +3,7 @@ interface IconSearchProps {
   isActive: boolean;
 }
 
-const IconSearch: React.FC<IconSearchProps> = ({ theme, isActive }) => {
+const IconSearch = ({ theme, isActive }: IconSearchProps) => {
   const fillColor = isActive
     ? '#335CFF'
     : theme === 'dark'

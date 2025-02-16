@@ -3,7 +3,7 @@ interface IconTagProps {
   isActive: boolean;
 }
 
-const IconTag: React.FC<IconTagProps> = ({ theme, isActive }) => {
+const IconTag = ({ theme, isActive }: IconTagProps) => {
   const fillColor = isActive
     ? '#335CFF'
     : theme === 'dark'
