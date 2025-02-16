@@ -3,7 +3,7 @@ interface IconArchiveProps {
   isActive: boolean;
 }
 
-const IconArchive: React.FC<IconArchiveProps> = ({ theme, isActive }) => {
+const IconArchive = ({ theme, isActive }: IconArchiveProps) => {
   const fillColor = isActive
     ? '#335CFF'
     : theme === 'dark'

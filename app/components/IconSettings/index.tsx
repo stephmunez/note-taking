@@ -3,7 +3,7 @@ interface IconSettingsProps {
   isActive: boolean;
 }
 
-const IconSettings: React.FC<IconSettingsProps> = ({ theme, isActive }) => {
+const IconSettings = ({ theme, isActive }: IconSettingsProps) => {
   const fillColor = isActive
     ? '#335CFF'
     : theme === 'dark'

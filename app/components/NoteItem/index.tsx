@@ -13,7 +13,7 @@ interface NoteItemProps {
   note: Note;
 }
 
-const NoteItem: React.FC<NoteItemProps> = ({ note }) => {
+const NoteItem = ({ note }: NoteItemProps) => {
   const { title, tags, lastEdited, id } = note;
   const formattedDate = new Date(lastEdited).toLocaleDateString('en-GB', {
     day: '2-digit',
