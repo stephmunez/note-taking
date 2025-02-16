@@ -1,6 +1,4 @@
-import Link from 'next/link';
-
-interface NoteProps {
+interface EditNoteProps {
   params: {
     id: string;
   };
@@ -20,7 +18,7 @@ const getNote = async (id: string): Promise<Note> => {
   return res.json();
 };
 
-const Note = async ({ params }: NoteProps) => {
+const EditNote = async ({ params }: EditNoteProps) => {
   const { id } = await params;
   const note = await getNote(id);
 
@@ -28,9 +26,8 @@ const Note = async ({ params }: NoteProps) => {
     <main>
       <h1>{note.title}</h1>
       <p>Note ID: {note.id}</p>
-      <Link href={`/edit/${id}`}>Edit note</Link>
     </main>
   );
 };
 
-export default Note;
+export default EditNote;
