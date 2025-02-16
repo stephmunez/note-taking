@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased dark:bg-neutral-950 bg-neutral-0 transition-colors duration-300 text-neutral-900 dark:text-neutral-0`}
+        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased dark:bg-neutral-800 font-sans bg-neutral-100 transition-colors duration-300 text-neutral-950 dark:text-neutral-0`}
       >
         <ThemeProvider attribute='class' defaultTheme='system'>
           <PageHeaderMobile />
