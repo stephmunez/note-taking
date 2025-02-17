@@ -12,7 +12,7 @@ const IconArrowLeft = ({ theme }: IconArrowLeftProps) => {
       viewBox="0 0 24 24"
     >
       <path
-        fill={theme === 'dark' ? '#FFF' : '#525866'}
+        fill={theme === 'dark' ? '#99A0AE' : '#525866'}
         fillRule="evenodd"
         d="M15.75 20.414 7.336 12l8.414-8.414L17.164 5l-7 7 7 7-1.414 1.414Z"
         clipRule="evenodd"

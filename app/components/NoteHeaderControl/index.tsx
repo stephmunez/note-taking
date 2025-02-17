@@ -31,7 +31,7 @@ const NoteHeaderControl = ({ id }: NoteHeaderControlProps) => {
           <IconArrowLeft theme={currentTheme} />
         </span>
 
-        <span className="text-base leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-white">
+        <span className="text-base leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-neutral-400">
           Go Back
         </span>
       </Link>
