@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 interface EditNoteProps {
   params: {
     id: string;
@@ -15,6 +17,11 @@ interface Note {
 
 const getNote = async (id: string): Promise<Note> => {
   const res = await fetch('http://localhost:4000/notes/' + id);
+
+  if (!res.ok) {
+    notFound();
+  }
+
   return res.json();
 };
 

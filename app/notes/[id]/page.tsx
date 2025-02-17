@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import NoteHeaderControl from '../../components/NoteHeaderControl';
 import ThemeButton from '../../components/ThemeButton';
 
@@ -19,6 +20,11 @@ interface Note {
 
 const getNote = async (id: string): Promise<Note> => {
   const res = await fetch('http://localhost:4000/notes/' + id);
+
+  if (!res.ok) {
+    notFound();
+  }
+
   return res.json();
 };
 
