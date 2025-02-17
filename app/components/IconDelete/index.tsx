@@ -1,18 +1,35 @@
 interface IconDeleteProps {
   theme?: string;
+  isActive?: boolean;
+  width?: number;
+  height?: number;
+  lightColor?: string;
+  darkColor?: string;
 }
 
-const IconDelete = ({ theme }: IconDeleteProps) => {
+const IconDelete = ({
+  theme,
+  isActive,
+  width,
+  height,
+  lightColor,
+  darkColor,
+}: IconDeleteProps) => {
+  const color = isActive
+    ? '#335CFF'
+    : theme === 'dark'
+      ? darkColor || '#99A0AE'
+      : lightColor || '#525866';
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="25"
+      width={width || 24}
+      height={height || 24}
       fill="none"
       viewBox="0 0 24 25"
     >
       <path
-        stroke={theme === 'dark' ? '#99A0AE' : '#525866'}
+        stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.5"

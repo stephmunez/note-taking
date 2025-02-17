@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import NoteHead from '../../components/NoteHead';
 import NoteHeaderControl from '../../components/NoteHeaderControl';
 import ThemeButton from '../../components/ThemeButton';
 
@@ -35,9 +35,22 @@ const Note = async ({ params }: NoteProps) => {
   return (
     <main className="flex min-h-[calc(100vh-108px)] w-full flex-col gap-3 rounded-t-lg bg-neutral-0 px-4 py-5 dark:bg-neutral-950">
       <NoteHeaderControl id={id} />
-      <h1>{note.title}</h1>
-      <p>Note ID: {note.id}</p>
-      <Link href={`/edit/${id}`}>Edit note</Link>
+      <NoteHead
+        title={note.title}
+        tags={note.tags}
+        lastEdited={note.lastEdited}
+      />
+      <div className="flex w-full flex-col gap-3">
+        <div className="text-sm leading-[1.3] tracking-[-0.2px] text-neutral-800 transition-colors duration-300 dark:text-neutral-100">
+          {note.content.split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              <br />
+            </span>
+          ))}
+        </div>
+      </div>
+
       <ThemeButton />
     </main>
   );
