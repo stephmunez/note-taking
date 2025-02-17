@@ -28,22 +28,37 @@ const NoteHeaderControl = ({ id }: NoteHeaderControlProps) => {
     <div className="flex w-full items-center justify-between border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800">
       <Link className="flex w-max items-center gap-1" href={'/'}>
         <span>
-          <IconArrowLeft theme={currentTheme} />
+          <IconArrowLeft
+            darkColor="#CACFD8"
+            width={18}
+            height={18}
+            theme={currentTheme}
+          />
         </span>
 
-        <span className="text-base leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-neutral-400">
+        <span className="text-sm leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-neutral-300">
           Go Back
         </span>
       </Link>
       <div className="flex items-center gap-4">
         <button>
-          <IconDelete theme={currentTheme} />
+          <IconDelete
+            darkColor="#CACFD8"
+            width={18}
+            height={18}
+            theme={currentTheme}
+          />
         </button>
         <button>
-          <IconArchive theme={currentTheme} />
+          <IconArchive
+            darkColor="#CACFD8"
+            width={18}
+            height={18}
+            theme={currentTheme}
+          />
         </button>
         <Link
-          className="text-base leading-[1.3] tracking-[-0.2px] text-blue-500"
+          className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500"
           href={`/notes/edit/${id}`}
         >
           Edit Note
