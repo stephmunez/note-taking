@@ -21,7 +21,7 @@ export default async function Home() {
   const notes = await getNotes();
   const activeNotes = notes.filter((note) => !note.isArchived);
   return (
-    <main className="z-50 min-h-[calc(100vh-108px)] rounded-t-lg bg-neutral-0 px-4 pb-16 pt-5 dark:bg-neutral-950">
+    <main className="z-50 min-h-[calc(100vh-108px)] rounded-t-lg bg-neutral-0 px-4 pb-16 pt-5 transition-colors duration-300 dark:bg-neutral-950">
       <div className="flex w-full flex-col gap-4">
         <h1 className="text-2xl font-bold leading-[1.2] tracking-[-0.5px]">
           All Notes
