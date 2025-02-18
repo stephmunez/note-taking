@@ -14,7 +14,7 @@ interface NoteItemProps {
 }
 
 const NoteItem = ({ note }: NoteItemProps) => {
-  const { title, tags, lastEdited, id } = note;
+  const { title, tags, lastEdited, id, isArchived } = note;
   const formattedDate = new Date(lastEdited).toLocaleDateString('en-GB', {
     day: '2-digit',
     month: 'short',
@@ -25,7 +25,7 @@ const NoteItem = ({ note }: NoteItemProps) => {
     <li>
       <Link
         className="flex flex-col gap-3 bg-white p-2 transition-colors duration-300 dark:bg-neutral-950"
-        href={`/notes/${id}`}
+        href={isArchived ? `/archive/${id}` : `/notes/${id}`}
       >
         <h2 className="text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-950 transition-colors duration-300 dark:text-white">
           {title}

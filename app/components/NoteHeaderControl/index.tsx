@@ -9,9 +9,10 @@ import IconDelete from '../IconDelete';
 
 interface NoteHeaderControlProps {
   id: string;
+  isArchived?: boolean;
 }
 
-const NoteHeaderControl = ({ id }: NoteHeaderControlProps) => {
+const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -26,7 +27,10 @@ const NoteHeaderControl = ({ id }: NoteHeaderControlProps) => {
   const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
     <div className="flex w-full items-center justify-between border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800">
-      <Link className="flex w-max items-center gap-1" href={'/'}>
+      <Link
+        className="flex w-max items-center gap-1"
+        href={isArchived ? '/archive' : '/'}
+      >
         <span>
           <IconArrowLeft
             darkColor="#CACFD8"
@@ -59,7 +63,7 @@ const NoteHeaderControl = ({ id }: NoteHeaderControlProps) => {
         </button>
         <Link
           className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500"
-          href={`/notes/edit/${id}`}
+          href={isArchived ? `/archive/edit/${id}` : `/notes/edit/${id}`}
         >
           Edit Note
         </Link>

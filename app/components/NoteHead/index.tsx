@@ -4,14 +4,16 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import IconClock from '../../components/IconClock';
 import IconTag from '../../components/IconTag';
+import IconStatus from '../IconStatus';
 
 interface NoteHeadProps {
   title: string;
   tags: string[];
   lastEdited: string;
+  isArchived: boolean;
 }
 
-const NoteHead = ({ title, tags, lastEdited }: NoteHeadProps) => {
+const NoteHead = ({ title, tags, lastEdited, isArchived }: NoteHeadProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -62,6 +64,26 @@ const NoteHead = ({ title, tags, lastEdited }: NoteHeadProps) => {
             ))}
           </ul>
         </div>
+        {isArchived && (
+          <div className="flex items-center gap-2">
+            <div className="flex w-1/3 items-center gap-[0.375rem]">
+              <IconStatus
+                darkColor="#CACFD8"
+                lightColor="#2B303B"
+                width={18}
+                height={18}
+                theme={currentTheme}
+              />
+              <span className="text-sm leading-[1.2] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 dark:text-neutral-300">
+                Status
+              </span>
+            </div>
+
+            <span className="text-sm leading-[1.2] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 dark:text-neutral-300">
+              Archived
+            </span>
+          </div>
+        )}
         <div className="flex items-center gap-2">
           <div className="flex w-1/3 items-center gap-[0.375rem]">
             <IconClock
