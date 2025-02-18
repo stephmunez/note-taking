@@ -19,21 +19,22 @@ const getNotes = async (): Promise<Note[]> => {
 
 export default async function Home() {
   const notes = await getNotes();
+  const activeNotes = notes.filter((note) => !note.isArchived);
   return (
     <main className="z-50 min-h-[calc(100vh-108px)] rounded-t-lg bg-neutral-0 px-4 pb-16 pt-5 dark:bg-neutral-950">
       <div className="flex w-full flex-col gap-4">
         <h1 className="text-2xl font-bold leading-[1.2] tracking-[-0.5px]">
           All Notes
         </h1>
-        {notes.length ? (
+        {activeNotes.length ? (
           <ul className="flex flex-col gap-1">
-            {notes.map((note, i) => (
+            {activeNotes.map((note, i) => (
               <React.Fragment key={note.id}>
                 <NoteItem note={note} />
                 <div
                   key={i}
                   className={`pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800 ${
-                    i === notes.length - 1 ? 'hidden' : ''
+                    i === activeNotes.length - 1 ? 'hidden' : ''
                   }`}
                 ></div>
               </React.Fragment>
