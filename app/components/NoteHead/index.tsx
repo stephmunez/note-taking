@@ -10,7 +10,7 @@ interface NoteHeadProps {
   title: string;
   tags: string[];
   lastEdited: string;
-  isArchived: boolean;
+  isArchived?: boolean;
 }
 
 const NoteHead = ({ title, tags, lastEdited, isArchived }: NoteHeadProps) => {
