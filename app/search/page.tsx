@@ -1,7 +1,6 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import CreateNewNoteButton from '../components/CreateNewNoteButton';
 import IconSearch from '../components/IconSearch';
@@ -27,7 +26,6 @@ export default function SearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchNotes = async () => {
