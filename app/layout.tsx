@@ -31,11 +31,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased dark:bg-neutral-800 font-sans bg-neutral-100 transition-colors duration-300 text-neutral-950 dark:text-neutral-0`}
+        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} bg-neutral-100 font-sans text-neutral-950 antialiased transition-colors duration-300 dark:bg-neutral-800 dark:text-neutral-0`}
       >
-        <ThemeProvider attribute='class' defaultTheme='system'>
+        <ThemeProvider attribute="class" defaultTheme="system">
           <PageHeaderMobile />
           {children}
           <MenuBar />
