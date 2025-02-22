@@ -29,35 +29,35 @@ const MenuBar = () => {
     pathname === route || pathname.startsWith(`${route}/`);
 
   return (
-    <footer className='fixed bottom-0 w-full bg-neutral-0 dark:bg-neutral-800 transition-colors duration-300 px-8 py-3'>
+    <footer className="fixed bottom-0 w-full bg-neutral-0 px-8 py-3 transition-colors duration-300 dark:bg-neutral-800">
       <nav>
-        <ul className='flex items-center justify-center w-full'>
-          <li className='w-full'>
+        <ul className="flex w-full items-center justify-center">
+          <li className="w-full">
             <Link
-              className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                isActive('/') ? 'bg-blue-50' : ''
+              className={`flex h-8 w-full items-center justify-center rounded-[4px] transition-colors duration-300 ${
+                isActive('/') ? 'bg-blue-50 dark:bg-neutral-700' : ''
               }`}
-              href='/'
+              href="/"
             >
               <IconHome theme={currentTheme} isActive={isActive('/')} />
             </Link>
           </li>
-          <li className='w-full'>
+          <li className="w-full">
             <Link
-              className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                isActive('/search') ? 'bg-blue-50' : ''
+              className={`flex h-8 w-full items-center justify-center rounded-[4px] transition-colors duration-300 ${
+                isActive('/search') ? 'bg-blue-50 dark:bg-neutral-700' : ''
               }`}
-              href='/search'
+              href="/search"
             >
               <IconSearch theme={currentTheme} isActive={isActive('/search')} />
             </Link>
           </li>
-          <li className='w-full'>
+          <li className="w-full">
             <Link
-              className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                isActive('/archive') ? 'bg-blue-50' : ''
+              className={`flex h-8 w-full items-center justify-center rounded-[4px] transition-colors duration-300 ${
+                isActive('/archive') ? 'bg-blue-50 dark:bg-neutral-700' : ''
               }`}
-              href='/archive'
+              href="/archive"
             >
               <IconArchive
                 theme={currentTheme}
@@ -65,22 +65,22 @@ const MenuBar = () => {
               />
             </Link>
           </li>
-          <li className='w-full'>
+          <li className="w-full">
             <Link
-              className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                isActive('/tags') ? 'bg-blue-50' : ''
+              className={`flex h-8 w-full items-center justify-center rounded-[4px] transition-colors duration-300 ${
+                isActive('/tags') ? 'bg-blue-50 dark:bg-neutral-700' : ''
               }`}
-              href='/tags'
+              href="/tags"
             >
               <IconTag theme={currentTheme} isActive={isActive('/tags')} />
             </Link>
           </li>
-          <li className='w-full'>
+          <li className="w-full">
             <Link
-              className={`w-full h-8 flex items-center rounded-[4px] justify-center ${
-                isActive('/settings') ? 'bg-blue-50' : ''
+              className={`flex h-8 w-full items-center justify-center rounded-[4px] transition-colors duration-300 ${
+                isActive('/settings') ? 'bg-blue-50 dark:bg-neutral-700' : ''
               }`}
-              href='/settings'
+              href="/settings"
             >
               <IconSettings
                 theme={currentTheme}

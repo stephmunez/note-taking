@@ -11,7 +11,7 @@ import LogoutModal from '../LogoutModal';
 
 const settingsOptions = [
   { href: '/settings/color', icon: IconSun, label: 'Color Theme' },
-  { href: '/settings/font', icon: IconFont, label: 'Font' },
+  { href: '/settings/font', icon: IconFont, label: 'Font Theme' },
   { href: '/settings/password', icon: IconLock, label: 'Change Password' },
 ];
 
