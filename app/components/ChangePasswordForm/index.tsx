@@ -6,7 +6,7 @@ import IconHidePassword from '../IconHidePassword';
 import IconShowPassword from '../IconShowPassword';
 
 const ChangePasswordForm = () => {
-  const { theme, setTheme, systemTheme } = useTheme();
+  const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [oldPassword, setOldPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
