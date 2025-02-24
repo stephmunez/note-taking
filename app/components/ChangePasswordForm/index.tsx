@@ -6,7 +6,7 @@ import IconHidePassword from '../IconHidePassword';
 import IconShowPassword from '../IconShowPassword';
 
 const ChangePasswordForm = () => {
-  const { theme, setTheme, systemTheme } = useTheme();
+  const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [oldPassword, setOldPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
@@ -57,6 +57,7 @@ const ChangePasswordForm = () => {
             <button
               onClick={() => setShowOldPassword(!showOldPassword)}
               className="absolute right-3 top-[calc(50%-10px)]"
+              type="button"
             >
               {showOldPassword ? (
                 <IconHidePassword
@@ -96,6 +97,7 @@ const ChangePasswordForm = () => {
             <button
               onClick={() => setShowNewPassword(!showNewPassword)}
               className="absolute right-3 top-[calc(50%-10px)]"
+              type="button"
             >
               {showNewPassword ? (
                 <IconHidePassword
@@ -135,6 +137,7 @@ const ChangePasswordForm = () => {
             <button
               onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
               className="absolute right-3 top-[calc(50%-10px)]"
+              type="button"
             >
               {showConfirmNewPassword ? (
                 <IconHidePassword

@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
 import { Inter, Noto_Serif, Source_Code_Pro } from 'next/font/google';
-import MenuBar from './components/MenuBar';
-import PageHeaderMobile from './components/PageHeaderMobile';
+import LayoutWrapper from './components/LayoutWrapper';
 import './globals.css';
 
 const inter = Inter({
@@ -33,12 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} bg-neutral-100 font-sans text-neutral-950 antialiased transition-colors duration-300 dark:bg-neutral-800 dark:text-neutral-0`}
+        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} min-h-[812px] bg-neutral-100 font-sans text-neutral-950 antialiased transition-colors duration-300 dark:bg-neutral-800 dark:text-neutral-0`}
       >
         <ThemeProvider attribute="class" defaultTheme="system">
-          <PageHeaderMobile />
-          {children}
-          <MenuBar />
+          <LayoutWrapper>{children}</LayoutWrapper>
         </ThemeProvider>
       </body>
     </html>
