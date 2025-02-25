@@ -98,7 +98,7 @@ const LoginForm = () => {
         </div>
       </div>
       <button
-        className="rounded-lg bg-blue-500 px-4 py-3 text-sm font-medium leading-[1.2] tracking-[-0.2px] text-neutral-0 transition-colors duration-300"
+        className="rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
         type="submit"
       >
         Login
