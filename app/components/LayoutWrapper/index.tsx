@@ -14,7 +14,7 @@ export default function LayoutWrapper({
     pathname === '/login' ||
     pathname === '/signup' ||
     pathname === '/forgot-password' ||
-    pathname === 'reset-password';
+    pathname === '/reset-password';
 
   return (
     <>
