@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import React from 'react';
 import CreateNewNoteButton from '../components/CreateNewNoteButton';
 import NoteItem from '../components/NoteItem';
@@ -11,6 +12,10 @@ interface Note {
   lastEdited: string;
   isArchived: boolean;
 }
+
+export const metadata: Metadata = {
+  title: 'Notes Taking | Home',
+};
 
 const getNotes = async (): Promise<Note[]> => {
   const res = await fetch('http://localhost:4000/notes');

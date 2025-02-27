@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import FontThemeOptions from '../../../components/FontThemeOptions';
 import SettingsHeaderControl from '../../../components/SettingsHeaderControl';
+
+export const metadata: Metadata = {
+  title: 'Notes Taking | Settings | Font',
+};
 
 const FontTheme = () => {
   return (

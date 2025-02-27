@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import ColorThemeOptions from '../../../components/ColorThemeOptions';
 import SettingsHeaderControl from '../../../components/SettingsHeaderControl';
+
+export const metadata: Metadata = {
+  title: 'Notes Taking | Settings | Color',
+};
 
 const ColorTheme = () => {
   return (

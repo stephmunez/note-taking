@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import Logo from '../../components/IconLogo';
 import ResetPasswordForm from '../../components/ResetPasswordForm';
+
+export const metadata: Metadata = {
+  title: 'Notes Taking | Reset Password',
+};
 
 const ResetPassword = () => {
   return (

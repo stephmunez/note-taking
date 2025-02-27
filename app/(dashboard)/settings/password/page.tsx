@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import ChangePasswordForm from '../../../components/ChangePasswordForm';
 import SettingsHeaderControl from '../../../components/SettingsHeaderControl';
+
+export const metadata: Metadata = {
+  title: 'Notes Taking | Settings | Change Password',
+};
 
 const ColorTheme = () => {
   return (
