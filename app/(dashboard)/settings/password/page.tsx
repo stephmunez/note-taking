@@ -1,5 +1,5 @@
-import ChangePasswordForm from '@/app/components/ChangePasswordForm';
-import SettingsHeaderControl from '../../components/SettingsHeaderControl';
+import ChangePasswordForm from '../../../components/ChangePasswordForm';
+import SettingsHeaderControl from '../../../components/SettingsHeaderControl';
 
 const ColorTheme = () => {
   return (

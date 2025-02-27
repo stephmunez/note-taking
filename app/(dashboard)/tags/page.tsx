@@ -1,7 +1,7 @@
 import React from 'react';
-import CreateNewNoteButton from '../components/CreateNewNoteButton';
-import TagItem from '../components/TagItem';
-import ThemeButton from '../components/ThemeButton';
+import CreateNewNoteButton from '../../components/CreateNewNoteButton';
+import TagItem from '../../components/TagItem';
+import ThemeButton from '../../components/ThemeButton';
 
 interface Note {
   id: string;

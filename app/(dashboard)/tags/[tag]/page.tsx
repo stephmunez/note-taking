@@ -1,8 +1,8 @@
 import React from 'react';
-import CreateNewNoteButton from '../../components/CreateNewNoteButton';
-import NoteItem from '../../components/NoteItem';
-import TagHeaderControl from '../../components/TagHeaderControl';
-import ThemeButton from '../../components/ThemeButton';
+import CreateNewNoteButton from '../../../components/CreateNewNoteButton';
+import NoteItem from '../../../components/NoteItem';
+import TagHeaderControl from '../../../components/TagHeaderControl';
+import ThemeButton from '../../../components/ThemeButton';
 
 interface TagProps {
   params: {

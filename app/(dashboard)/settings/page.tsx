@@ -1,5 +1,5 @@
-import SettingsList from '../components/SettingsList';
-import ThemeButton from '../components/ThemeButton';
+import SettingsList from '../../components/SettingsList';
+import ThemeButton from '../../components/ThemeButton';
 
 const Settings = () => {
   return (

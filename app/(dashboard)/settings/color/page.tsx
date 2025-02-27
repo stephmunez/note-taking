@@ -1,5 +1,5 @@
-import ColorThemeOptions from '@/app/components/ColorThemeOptions';
-import SettingsHeaderControl from '../../components/SettingsHeaderControl';
+import ColorThemeOptions from '../../../components/ColorThemeOptions';
+import SettingsHeaderControl from '../../../components/SettingsHeaderControl';
 
 const ColorTheme = () => {
   return (
