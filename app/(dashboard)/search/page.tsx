@@ -2,10 +2,10 @@
 
 import { useTheme } from 'next-themes';
 import React, { useEffect, useState } from 'react';
-import CreateNewNoteButton from '../components/CreateNewNoteButton';
-import IconSearch from '../components/IconSearch';
-import NoteItem from '../components/NoteItem';
-import ThemeButton from '../components/ThemeButton';
+import CreateNewNoteButton from '../../components/CreateNewNoteButton';
+import IconSearch from '../../components/IconSearch';
+import NoteItem from '../../components/NoteItem';
+import ThemeButton from '../../components/ThemeButton';
 
 interface Note {
   id: string;

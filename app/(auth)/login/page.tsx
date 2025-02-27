@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import GoogleLogin from '../components/GoogleLogin';
-import Logo from '../components/IconLogo';
-import LoginForm from '../components/LoginForm';
+import GoogleLogin from '../../components/GoogleLogin';
+import Logo from '../../components/IconLogo';
+import LoginForm from '../../components/LoginForm';
 
 const Login = () => {
   return (

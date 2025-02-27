@@ -1,5 +1,5 @@
-import FontThemeOptions from '../../components/FontThemeOptions';
-import SettingsHeaderControl from '../../components/SettingsHeaderControl';
+import FontThemeOptions from '../../../components/FontThemeOptions';
+import SettingsHeaderControl from '../../../components/SettingsHeaderControl';
 
 const FontTheme = () => {
   return (
