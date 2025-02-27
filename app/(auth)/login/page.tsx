@@ -1,7 +1,12 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import GoogleLogin from '../../components/GoogleLogin';
 import Logo from '../../components/IconLogo';
 import LoginForm from '../../components/LoginForm';
+
+export const metadata: Metadata = {
+  title: 'Notes Taking | Login',
+};
 
 const Login = () => {
   return (

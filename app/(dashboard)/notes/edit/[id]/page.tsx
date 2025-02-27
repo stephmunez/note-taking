@@ -15,6 +15,17 @@ interface Note {
   isArchived: boolean;
 }
 
+interface Params {
+  id: string;
+}
+
+export const generateMetadata = async ({ params }: { params: Params }) => {
+  const { id } = params;
+  const res = await fetch(`http://localhost:4000/notes/${id}`);
+  const note = await res.json();
+  return { title: `Note Taking | Edit ${note.title}` };
+};
+
 const getNote = async (id: string): Promise<Note> => {
   const res = await fetch('http://localhost:4000/notes/' + id);
 

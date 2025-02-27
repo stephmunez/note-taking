@@ -19,6 +19,17 @@ interface Note {
   isArchived: boolean;
 }
 
+interface Params {
+  tag: string;
+}
+
+export const generateMetadata = async ({ params }: { params: Params }) => {
+  const { tag } = params;
+  return {
+    title: `Note Taking | Tags | ${tag.charAt(0).toUpperCase() + tag.slice(1)}`,
+  };
+};
+
 const getNotes = async (): Promise<Note[]> => {
   const res = await fetch('http://localhost:4000/notes');
   return res.json();
