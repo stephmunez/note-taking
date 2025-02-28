@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import Logo from '../../components/IconLogo';
+import Logo from '../../components/Logo';
 import ResetPasswordForm from '../../components/ResetPasswordForm';
 
 export const metadata: Metadata = {

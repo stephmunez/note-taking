@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import ForgotPasswordForm from '../../components/ForgotPasswordForm';
-import Logo from '../../components/IconLogo';
+import Logo from '../../components/Logo';
 
 export const metadata: Metadata = {
   title: 'Notes Taking | Forgot Password',
