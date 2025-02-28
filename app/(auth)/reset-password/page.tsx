@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const ResetPassword = () => {
   return (
-    <main className="flex h-screen w-full items-center px-4 py-24">
+    <main className="flex min-h-screen w-full items-center px-4 py-24">
       <div className="flex w-full flex-col items-center gap-4 rounded-xl border border-solid border-neutral-200 bg-neutral-0 px-4 py-10 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950">
         <Logo />
         <div className="cl flex w-full flex-col items-center gap-2">
