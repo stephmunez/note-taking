@@ -3,6 +3,7 @@ import Link from 'next/link';
 import GoogleLogin from '../../components/GoogleLogin';
 import LoginForm from '../../components/LoginForm';
 import Logo from '../../components/Logo';
+import { login } from '../actions';
 
 export const metadata: Metadata = {
   title: 'Notes Taking | Login',
@@ -21,7 +22,7 @@ const Login = () => {
             Please log in to continue
           </p>
         </div>
-        <LoginForm />
+        <LoginForm login={login} />
         <GoogleLogin />
         <div className="pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800"></div>
         <span className="text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-neutral-300">

@@ -1,13 +1,32 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 interface LogoutModalProps {
   onClose: () => void;
 }
 
 export default function LogoutModal({ onClose }: LogoutModalProps) {
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    window.location.href = '/login';
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/auth/signout', {
+        method: 'POST',
+      });
+
+      if (res.ok) {
+        router.replace('/login'); // Redirect to login after logout
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -30,7 +49,7 @@ export default function LogoutModal({ onClose }: LogoutModalProps) {
             onClick={handleLogout}
             className="rounded-md bg-red-500 px-3 py-1 text-sm text-white hover:bg-red-600"
           >
-            Logout
+            {loading ? 'Logging out...' : 'Logout'}
           </button>
         </div>
       </div>
