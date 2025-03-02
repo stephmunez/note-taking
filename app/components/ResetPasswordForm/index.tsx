@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { createClient } from '../../../utils/supabase/client';
 import IconHidePassword from '../IconHidePassword';
+import IconInfo from '../IconInfo';
 import IconShowPassword from '../IconShowPassword';
 
 const supabase = createClient();
@@ -142,8 +143,40 @@ const ResetPasswordForm = () => {
         Reset Password
       </button>
 
-      {message && <p className="text-sm text-green-500">{message}</p>}
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {message && (
+        <div className="flex items-center gap-2">
+          <span className="min-w-5">
+            <IconInfo
+              theme={currentTheme}
+              darkColor="#FB3748"
+              lightColor="#FB3748"
+              width={20}
+              height={20}
+            />
+          </span>
+          <span className="text-xs font-medium leading-[1.2] tracking-[-0.2px] text-green-500">
+            {message}
+          </span>
+        </div>
+      )}
+
+      {error && (
+        <div className="flex items-center gap-2">
+          <span className="min-w-5">
+            <IconInfo
+              theme={currentTheme}
+              darkColor="#FB3748"
+              lightColor="#FB3748"
+              width={20}
+              height={20}
+            />
+          </span>
+
+          <span className="text-xs font-medium leading-[1.2] tracking-[-0.2px] text-red-500">
+            {error}
+          </span>
+        </div>
+      )}
     </form>
   );
 };
