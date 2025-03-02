@@ -1,14 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 import { createClient } from '../../../utils/supabase/client';
+import IconInfo from '../IconInfo';
 
 const supabase = createClient();
 
 const ForgotPasswordForm = () => {
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const currentTheme = theme === 'system' ? systemTheme : theme;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +39,11 @@ const ForgotPasswordForm = () => {
   };
 
   return (
-    <form className="flex w-full flex-col gap-4 pt-6" onSubmit={handleSubmit}>
+    <form
+      className="flex w-full flex-col gap-4 pt-6"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <div className="flex w-full flex-col gap-[0.375rem]">
         <label
           htmlFor="email"
@@ -43,7 +59,6 @@ const ForgotPasswordForm = () => {
             className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
             onChange={(e) => setEmail(e.target.value)}
             placeholder="email@example.com"
-            required
           />
         </div>
       </div>
@@ -55,8 +70,39 @@ const ForgotPasswordForm = () => {
         Send Reset Link
       </button>
 
-      {message && <p className="text-sm text-green-500">{message}</p>}
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {message && (
+        <div className="flex items-center gap-2">
+          <span className="min-w-5">
+            <IconInfo
+              theme={currentTheme}
+              darkColor="#21C16B"
+              lightColor="#21C16B"
+              width={20}
+              height={20}
+            />
+          </span>
+          <span className="text-xs font-medium leading-[1.2] tracking-[-0.2px] text-green-500">
+            {message}
+          </span>
+        </div>
+      )}
+
+      {error && (
+        <div className="flex items-center gap-2">
+          <span className="min-w-5">
+            <IconInfo
+              theme={currentTheme}
+              darkColor="#21C16B"
+              lightColor="#21C16B"
+              width={20}
+              height={20}
+            />
+          </span>
+          <span className="text-xs font-medium leading-[1.2] tracking-[-0.2px] text-red-500">
+            {error}
+          </span>
+        </div>
+      )}
     </form>
   );
 };
