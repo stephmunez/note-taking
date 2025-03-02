@@ -3,12 +3,13 @@ import Link from 'next/link';
 import GoogleSignup from '../../components/GoogleSignup';
 import Logo from '../../components/Logo';
 import SignupForm from '../../components/SignupForm';
+import { signup } from '../actions';
 
 export const metadata: Metadata = {
   title: 'Notes Taking | Login',
 };
 
-const Login = () => {
+const Signup = () => {
   return (
     <main className="min-h-screen w-full px-4 py-24">
       <div className="flex w-full flex-col items-center gap-4 rounded-xl border border-solid border-neutral-200 bg-neutral-0 px-4 py-10 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950">
@@ -21,7 +22,7 @@ const Login = () => {
             Sign up to start organizing your notes and boost your productivity.
           </p>
         </div>
-        <SignupForm />
+        <SignupForm signup={signup} />
         <GoogleSignup />
         <div className="pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800"></div>
         <span className="text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-neutral-300">
@@ -38,4 +39,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
