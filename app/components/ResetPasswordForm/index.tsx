@@ -1,9 +1,13 @@
 'use client';
 
 import { useTheme } from 'next-themes';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { createClient } from '../../../utils/supabase/client';
 import IconHidePassword from '../IconHidePassword';
 import IconShowPassword from '../IconShowPassword';
+
+const supabase = createClient();
 
 const ResetPasswordForm = () => {
   const { theme, systemTheme } = useTheme();
@@ -12,6 +16,9 @@ const ResetPasswordForm = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>('');
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     setMounted(true);
   }, [theme]);
@@ -19,14 +26,28 @@ const ResetPasswordForm = () => {
   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setMessage(null);
+    setError(null);
 
-    console.log({
-      newPassword,
-      confirmNewPassword,
-    });
+    if (newPassword !== confirmNewPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+
+    if (error) {
+      setError(error.message);
+    } else {
+      setMessage('Password successfully reset. Redirecting to home...');
+      setTimeout(() => {
+        redirect('/');
+      }, 2000);
+    }
   };
+
   return (
     <form className="flex w-full flex-col gap-4 pt-6" onSubmit={handleSubmit}>
       <div className="flex w-full flex-col gap-[0.375rem]">
@@ -44,6 +65,7 @@ const ResetPasswordForm = () => {
             name="new-password"
             className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
             onChange={(e) => setNewPassword(e.target.value)}
+            required
           />
           <button
             onClick={() => setShowNewPassword(!showNewPassword)}
@@ -75,7 +97,7 @@ const ResetPasswordForm = () => {
           htmlFor="confirm-new-password"
           className="text-sm font-medium leading-[1.2] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:text-neutral-0"
         >
-          Password
+          Confirm Password
         </label>
 
         <div className="relative">
@@ -85,6 +107,7 @@ const ResetPasswordForm = () => {
             name="confirm-new-password"
             className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
             onChange={(e) => setConfirmNewPassword(e.target.value)}
+            required
           />
           <button
             onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
@@ -118,6 +141,9 @@ const ResetPasswordForm = () => {
       >
         Reset Password
       </button>
+
+      {message && <p className="text-sm text-green-500">{message}</p>}
+      {error && <p className="text-sm text-red-500">{error}</p>}
     </form>
   );
 };
