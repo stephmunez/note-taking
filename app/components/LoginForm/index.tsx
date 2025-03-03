@@ -4,16 +4,18 @@ import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import IconHidePassword from '../IconHidePassword';
+import IconInfo from '../IconInfo';
 import IconShowPassword from '../IconShowPassword';
 
 interface LoginFormProps {
-  login: (formData: FormData) => Promise<void>;
+  login: (formData: FormData) => Promise<{ error?: string } | void>;
 }
 
 const LoginForm = ({ login }: LoginFormProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -22,8 +24,20 @@ const LoginForm = ({ login }: LoginFormProps) => {
   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme;
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null); // Reset error on new submission
+
+    const formData = new FormData(event.currentTarget);
+    const result = await login(formData);
+
+    if (result?.error) {
+      setError(result.error);
+    }
+  };
+
   return (
-    <form className="flex w-full flex-col gap-4 pt-6">
+    <form className="flex w-full flex-col gap-4 pt-6" onSubmit={handleSubmit}>
       <div className="flex w-full flex-col gap-[0.375rem]">
         <label
           htmlFor="email"
@@ -91,10 +105,28 @@ const LoginForm = ({ login }: LoginFormProps) => {
       </div>
       <button
         className="rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
-        formAction={login}
+        type="submit"
       >
         Login
       </button>
+
+      {error && (
+        <div className="flex items-center gap-2">
+          <span className="min-w-5">
+            <IconInfo
+              theme={currentTheme}
+              darkColor="#FB3748"
+              lightColor="#FB3748"
+              width={20}
+              height={20}
+            />
+          </span>
+
+          <span className="text-xs font-medium leading-[1.2] tracking-[-0.2px] text-red-500">
+            {error}
+          </span>
+        </div>
+      )}
     </form>
   );
 };
