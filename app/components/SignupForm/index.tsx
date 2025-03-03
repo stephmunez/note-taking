@@ -6,14 +6,14 @@ import IconHidePassword from '../IconHidePassword';
 import IconInfo from '../IconInfo';
 import IconShowPassword from '../IconShowPassword';
 interface SignupFormProps {
-  signup: (formData: FormData) => Promise<void>;
+  signup: (formData: FormData) => Promise<{ error?: string } | void>;
 }
 
 const SignupForm = ({ signup }: SignupFormProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -22,8 +22,24 @@ const SignupForm = ({ signup }: SignupFormProps) => {
   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme;
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null); // Reset error on new submission
+
+    const formData = new FormData(event.currentTarget);
+    const result = await signup(formData);
+
+    if (result?.error) {
+      setError(result.error);
+    }
+  };
+
   return (
-    <form className="flex w-full flex-col gap-4 pt-6">
+    <form
+      className="flex w-full flex-col gap-4 pt-6"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <div className="flex w-full flex-col gap-[0.375rem]">
         <label
           htmlFor="email"
@@ -90,10 +106,28 @@ const SignupForm = ({ signup }: SignupFormProps) => {
       </div>
       <button
         className="rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
-        formAction={signup}
+        type="submit"
       >
         Sign Up
       </button>
+
+      {error && (
+        <div className="flex items-center gap-2">
+          <span className="min-w-5">
+            <IconInfo
+              theme={currentTheme}
+              darkColor="#FB3748"
+              lightColor="#FB3748"
+              width={20}
+              height={20}
+            />
+          </span>
+
+          <span className="text-xs font-medium leading-[1.2] tracking-[-0.2px] text-red-500">
+            {error}
+          </span>
+        </div>
+      )}
     </form>
   );
 };
