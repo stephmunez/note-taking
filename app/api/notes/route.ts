@@ -1,3 +1,4 @@
+import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -21,17 +22,23 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const supabase = await createClient();
   const note: Note = await request.json();
 
-  const res = await fetch('http://localhost:4000/notes', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(note),
-  });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  const newNote: Note = await res.json();
+  const { data, error } = await supabase
+    .from('notes')
+    .insert([
+      {
+        ...note,
+        user_email: session?.user.email,
+      },
+    ])
+    .select()
+    .single();
 
-  return NextResponse.json(newNote, {
-    status: 201,
-  });
+  return NextResponse.json({ data, error });
 }
