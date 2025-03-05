@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import React from 'react';
 import CreateNewNoteButton from '../components/CreateNewNoteButton';
 import NoteItem from '../components/NoteItem';
-import ThemeButton from '../components/ThemeButton';
 
 interface Note {
   id: string;
@@ -53,7 +52,6 @@ export default async function Home() {
         )}
       </div>
 
-      <ThemeButton />
       <CreateNewNoteButton />
     </main>
   );
