@@ -1,44 +1,43 @@
+import { createClient } from '@/utils/supabase/server';
 import { Metadata } from 'next';
 import React from 'react';
 import CreateNewNoteButton from '../components/CreateNewNoteButton';
 import NoteItem from '../components/NoteItem';
 
-interface Note {
-  id: string;
-  title: string;
-  tags: string[];
-  content: string;
-  lastEdited: string;
-  isArchived: boolean;
-}
-
 export const metadata: Metadata = {
   title: 'Notes Taking | Home',
 };
 
-const getNotes = async (): Promise<Note[]> => {
-  const res = await fetch('http://localhost:4000/notes');
-  return res.json();
+const getNotes = async () => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('notes')
+    .select('*')
+    .eq('isArchived', false)
+    .order('lastEdited', { ascending: false });
+
+  if (error) console.log(error);
+  return data;
 };
 
 export default async function Home() {
   const notes = await getNotes();
-  const activeNotes = notes.filter((note) => !note.isArchived);
+
   return (
     <main className="z-50 min-h-[calc(100vh-108px)] rounded-t-lg bg-neutral-0 px-4 pb-16 pt-5 transition-colors duration-300 dark:bg-neutral-950">
       <div className="flex w-full flex-col gap-4">
         <h1 className="text-2xl font-bold leading-[1.2] tracking-[-0.5px]">
           All Notes
         </h1>
-        {activeNotes.length ? (
+        {notes && notes.length ? (
           <ul className="flex flex-col gap-1">
-            {activeNotes.map((note, i) => (
+            {notes.map((note, i) => (
               <React.Fragment key={note.id}>
                 <NoteItem note={note} />
                 <div
                   key={i}
                   className={`pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800 ${
-                    i === activeNotes.length - 1 ? 'hidden' : ''
+                    i === notes.length - 1 ? 'hidden' : ''
                   }`}
                 ></div>
               </React.Fragment>

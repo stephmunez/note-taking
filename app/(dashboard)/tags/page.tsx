@@ -1,3 +1,4 @@
+import { createClient } from '@/utils/supabase/server';
 import { Metadata } from 'next';
 import React from 'react';
 import CreateNewNoteButton from '../../components/CreateNewNoteButton';
@@ -17,14 +18,24 @@ export const metadata: Metadata = {
 };
 
 const getNotes = async (): Promise<Note[]> => {
-  const res = await fetch('http://localhost:4000/notes');
-  return res.json();
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('notes')
+    .select('*')
+    .eq('isArchived', false);
+
+  if (error) {
+    console.error('Error fetching notes:', error.message);
+    return [];
+  }
+
+  return data;
 };
 
 export default async function Home() {
   const notes = await getNotes();
-  const activeNotes = notes.filter((note) => !note.isArchived);
-  const uniqueTags = activeNotes
+
+  const uniqueTags = notes
     .reduce<string[]>((acc, note) => {
       note.tags.forEach((tag) => {
         if (!acc.includes(tag)) {
@@ -45,9 +56,9 @@ export default async function Home() {
           <ul className="flex flex-col gap-1">
             {uniqueTags.map((tag, i) => (
               <React.Fragment key={tag}>
-                <TagItem tag={tag} key={tag} />
+                <TagItem tag={tag} />
                 <div
-                  key={i}
+                  key={`divider-${i}`}
                   className={`pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800 ${
                     i === uniqueTags.length - 1 ? 'hidden' : ''
                   }`}

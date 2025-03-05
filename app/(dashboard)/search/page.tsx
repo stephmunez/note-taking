@@ -1,3 +1,4 @@
+import { createClient } from '@/utils/supabase/server';
 import { Metadata } from 'next';
 import Search from '../../components/Search';
 
@@ -11,8 +12,19 @@ interface Note {
 }
 
 const getNotes = async (): Promise<Note[]> => {
-  const res = await fetch('http://localhost:4000/notes');
-  return res.json();
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('notes')
+    .select('*')
+    .eq('isArchived', false)
+    .order('lastEdited', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching notes:', error.message);
+    return [];
+  }
+
+  return data;
 };
 
 export const metadata: Metadata = {
