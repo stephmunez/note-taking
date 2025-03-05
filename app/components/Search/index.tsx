@@ -26,11 +26,10 @@ export default function Search({ notes }: { notes: Note[] }) {
 
   const filteredNotes = notes.filter(
     (note) =>
-      !note.isArchived &&
-      (note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        note.tags.some((tag) =>
-          tag.toLowerCase().includes(searchTerm.toLowerCase()),
-        )),
+      note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.tags.some((tag) =>
+        tag.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
   );
 
   if (!mounted) return null;
