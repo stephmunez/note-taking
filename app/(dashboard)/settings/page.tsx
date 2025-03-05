@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import SettingsList from '../../components/SettingsList';
-import ThemeButton from '../../components/ThemeButton';
 
 export const metadata: Metadata = {
   title: 'Notes Taking | Settings',
@@ -13,7 +12,6 @@ const Settings = () => {
         Settings
       </h1>
       <SettingsList />
-      <ThemeButton />
     </main>
   );
 };

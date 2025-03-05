@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import NoteHead from '../../../components/NoteHead';
 import NoteHeaderControl from '../../../components/NoteHeaderControl';
-import ThemeButton from '../../../components/ThemeButton';
 
 interface ArchivedNoteProps {
   params: {
@@ -63,8 +62,6 @@ const ArchivedNote = async ({ params }: ArchivedNoteProps) => {
           ))}
         </div>
       </div>
-
-      <ThemeButton />
     </main>
   );
 };

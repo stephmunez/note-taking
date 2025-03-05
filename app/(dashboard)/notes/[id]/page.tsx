@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import NoteHead from '../../../components/NoteHead';
 import NoteHeaderControl from '../../../components/NoteHeaderControl';
-import ThemeButton from '../../../components/ThemeButton';
 
 interface NoteProps {
   params: {
@@ -61,8 +60,6 @@ const Note = async ({ params }: NoteProps) => {
           ))}
         </div>
       </div>
-
-      <ThemeButton />
     </main>
   );
 };
