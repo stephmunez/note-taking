@@ -1,3 +1,4 @@
+import { createClient } from '@/utils/supabase/server';
 import React from 'react';
 import CreateNewNoteButton from '../../../components/CreateNewNoteButton';
 import NoteItem from '../../../components/NoteItem';
@@ -9,38 +10,37 @@ interface TagProps {
   };
 }
 
-interface Note {
-  id: string;
-  title: string;
-  tags: string[];
-  content: string;
-  lastEdited: string;
-  isArchived: boolean;
-}
-
 interface Params {
   tag: string;
 }
 
 export const generateMetadata = async ({ params }: { params: Params }) => {
-  const { tag } = params;
+  const { tag } = await params;
   return {
     title: `Note Taking | Tags | ${tag.charAt(0).toUpperCase() + tag.slice(1)}`,
   };
 };
 
-const getNotes = async (): Promise<Note[]> => {
-  const res = await fetch('http://localhost:4000/notes');
-  return res.json();
+const getNotes = async (tag: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('notes')
+    .select('*')
+    .eq('isArchived', false)
+    .contains('tags', [tag.charAt(0).toUpperCase() + tag.slice(1)])
+    .order('lastEdited', { ascending: false });
+
+  if (error) {
+    console.log('Error fetching notes:', error.message);
+    return [];
+  }
+
+  return data || [];
 };
 
 export default async function Tag({ params }: TagProps) {
   const { tag } = await params;
-  const notes = await getNotes();
-  const activeNotes = notes.filter((note) => !note.isArchived);
-  const taggedNotes = activeNotes.filter((note) =>
-    note.tags.some((t) => t.toLowerCase() === tag.toLowerCase()),
-  );
+  const notes = await getNotes(tag);
 
   return (
     <main className="z-50 flex min-h-[calc(100vh-108px)] w-full flex-col gap-4 rounded-t-lg bg-neutral-0 px-4 pb-16 pt-5 transition-colors duration-300 dark:bg-neutral-950">
@@ -52,15 +52,15 @@ export default async function Tag({ params }: TagProps) {
         All notes with the ”{tag.charAt(0).toUpperCase() + tag.slice(1)}” tag
         are shown here.
       </p>
-      {taggedNotes.length ? (
+      {notes.length ? (
         <ul className="flex flex-col gap-1">
-          {taggedNotes.map((note, i) => (
+          {notes.map((note, i) => (
             <React.Fragment key={note.id}>
               <NoteItem note={note} />
               <div
                 key={i}
                 className={`pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800 ${
-                  i === taggedNotes.length - 1 ? 'hidden' : ''
+                  i === notes.length - 1 ? 'hidden' : ''
                 }`}
               ></div>
             </React.Fragment>
