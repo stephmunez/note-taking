@@ -26,15 +26,15 @@ export async function POST(request: Request) {
   const note: Note = await request.json();
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const { data, error } = await supabase
     .from('notes')
     .insert([
       {
         ...note,
-        user_email: session?.user.email,
+        user_id: user?.id,
       },
     ])
     .select()
