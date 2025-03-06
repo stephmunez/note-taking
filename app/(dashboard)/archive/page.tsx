@@ -1,7 +1,7 @@
-import ArchiveNotesList from '@/app/components/ArchiveNotesList';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import CreateNewNoteButton from '../../components/CreateNewNoteButton';
+import NotesList from '../../components/NotesList';
 
 export const metadata: Metadata = {
   title: 'Notes Taking | Archive',
@@ -21,11 +21,11 @@ export default async function Home() {
         <Suspense
           fallback={
             <p className="text-sm text-neutral-700 dark:text-neutral-300">
-              Loading notes...
+              Loading archived notes...
             </p>
           }
         >
-          <ArchiveNotesList />
+          <NotesList isArchived={true} />
         </Suspense>
       </div>
 
