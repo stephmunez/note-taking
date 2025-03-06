@@ -14,7 +14,13 @@ export default async function Home() {
         <h1 className="text-2xl font-bold leading-[1.2] tracking-[-0.5px]">
           All Notes
         </h1>
-        <Suspense fallback={<p>Loading notes...</p>}>
+        <Suspense
+          fallback={
+            <p className="text-sm text-neutral-700 dark:text-neutral-300">
+              Loading notes...
+            </p>
+          }
+        >
           <NotesList />
         </Suspense>
       </div>
