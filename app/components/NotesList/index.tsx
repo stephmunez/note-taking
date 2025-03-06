@@ -1,9 +1,15 @@
 import { getNotes } from '@/lib/notes';
+import Link from 'next/link';
 import React from 'react';
 import NoteItem from '../NoteItem';
 
-const NotesList = async () => {
-  const notes = await getNotes();
+interface NotesListProps {
+  tag?: string;
+  isArchived?: boolean;
+}
+
+const NotesList = async ({ tag, isArchived }: NotesListProps) => {
+  const notes = await getNotes(tag, isArchived);
 
   return (
     <>
@@ -23,8 +29,19 @@ const NotesList = async () => {
         </ul>
       ) : (
         <p className="rounded-lg border border-solid border-neutral-200 bg-neutral-100 p-2 text-sm leading-[1.3] tracking-[-0.2px] text-neutral-950 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-0">
-          You don’t have any notes yet. Start a new note to capture your
-          thoughts and ideas.
+          {isArchived ? (
+            <>
+              No notes have been archived yet. Move notes here for safekeeping,
+              or <Link href={'/create'}>create a new note</Link>.
+            </>
+          ) : (
+            <>
+              You don&apos;t have any
+              {tag && tag.charAt(0).toUpperCase() + tag.slice(1)} notes yet.
+              <Link href={'/create'}>Start a new note</Link> to capture your
+              thoughts and ideas.
+            </>
+          )}
         </p>
       )}
     </>
