@@ -1,28 +1,35 @@
 'use client';
-
+import { getClientNotes, Note } from '@/lib/clientNotes';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import CreateNewNoteButton from '../CreateNewNoteButton';
 import IconSearch from '../IconSearch';
 import NoteItem from '../NoteItem';
 
-interface Note {
-  id: string;
-  title: string;
-  tags: string[];
-  content: string;
-  lastEdited: string;
-  isArchived: boolean;
-}
-
-export default function Search({ notes }: { notes: Note[] }) {
+export default function Search() {
+  const [notes, setNotes] = useState<Note[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    loadNotes();
   }, []);
+
+  const loadNotes = async () => {
+    setLoading(true);
+    try {
+      const data = await getClientNotes();
+      setNotes(data);
+    } catch (error) {
+      console.error('Error loading notes:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredNotes = notes.filter(
     (note) =>
@@ -33,7 +40,6 @@ export default function Search({ notes }: { notes: Note[] }) {
   );
 
   if (!mounted) return null;
-
   const currentTheme = theme === 'system' ? systemTheme : theme;
 
   return (
@@ -60,32 +66,41 @@ export default function Search({ notes }: { notes: Note[] }) {
         />
       </div>
 
-      {searchTerm && (
-        <p className="text-sm leading-[1.3] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 dark:text-neutral-200">
-          All notes matching ”{searchTerm}” are displayed below.
+      {loading ? (
+        <p className="text-sm text-neutral-700 dark:text-neutral-300">
+          Loading notes...
         </p>
-      )}
-      {filteredNotes.length ? (
-        <ul className="flex flex-col gap-1">
-          {filteredNotes.map((note, i) => (
-            <React.Fragment key={note.id}>
-              <NoteItem note={note} />
-              <div
-                key={i}
-                className={`pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800 ${
-                  i === filteredNotes.length - 1 ? 'hidden' : ''
-                }`}
-              ></div>
-            </React.Fragment>
-          ))}
-        </ul>
       ) : (
-        <p className="rounded-lg border border-solid border-neutral-200 bg-neutral-100 p-2 text-sm leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-0">
-          No notes match your search. Try a different keyword or{' '}
-          <button className="underline">create a new note.</button>
-        </p>
+        <>
+          {searchTerm && (
+            <p className="text-sm leading-[1.3] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 dark:text-neutral-200">
+              {`All notes matching ${searchTerm} are displayed below.`}
+            </p>
+          )}
+          {filteredNotes.length ? (
+            <ul className="flex flex-col gap-1">
+              {filteredNotes.map((note, i) => (
+                <React.Fragment key={note.id}>
+                  <NoteItem note={note} />
+                  <div
+                    key={i}
+                    className={`pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800 ${
+                      i === filteredNotes.length - 1 ? 'hidden' : ''
+                    }`}
+                  ></div>
+                </React.Fragment>
+              ))}
+            </ul>
+          ) : (
+            <p className="rounded-lg border border-solid border-neutral-200 bg-neutral-100 p-2 text-sm leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-0">
+              No notes match your search. Try a different keyword or{' '}
+              <Link href={'/create'} className="underline">
+                create a new note.
+              </Link>
+            </p>
+          )}
+        </>
       )}
-
       <CreateNewNoteButton />
     </main>
   );
