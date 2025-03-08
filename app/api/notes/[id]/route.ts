@@ -1,3 +1,4 @@
+import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
 
 interface Params {
@@ -6,15 +7,63 @@ interface Params {
   };
 }
 
-export async function GET(_: Request, { params }: Params) {
+export async function DELETE(_: Request, { params }: Params) {
   const { id } = params;
 
-  const res = await fetch(`http://localhost:4000/notes/${id}`);
-  const note = await res.json();
+  try {
+    const supabase = await createClient();
 
-  if (!res.ok) {
-    return NextResponse.json({ error: 'Cannot find note' }, { status: 404 });
+    // Verify user is authenticated and owns the note
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 },
+      );
+    }
+
+    // First check if the note exists and belongs to the user
+    const { data: noteData, error: noteError } = await supabase
+      .from('notes')
+      .select('id')
+      .eq('id', id)
+      .eq('user_id', user.id)
+      .single();
+
+    if (noteError || !noteData) {
+      return NextResponse.json(
+        { error: 'Note not found or not authorized' },
+        { status: 404 },
+      );
+    }
+
+    // Delete the note
+    const { error: deleteError } = await supabase
+      .from('notes')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', user.id);
+
+    if (deleteError) {
+      return NextResponse.json(
+        { error: `Failed to delete note: ${deleteError.message}` },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json(
+      { message: 'Note deleted successfully' },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error('Error in DELETE handler:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete note' },
+      { status: 500 },
+    );
   }
-
-  return NextResponse.json(note, { status: 200 });
 }
