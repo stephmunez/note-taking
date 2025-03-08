@@ -45,10 +45,19 @@ export const getNotes = async (tag?: string, isArchived?: boolean) => {
 
 export const getNote = async (id: string) => {
   const supabase = await createClient();
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError) throw new Error(`Authentication error: ${userError.message}`);
+  if (!user) throw new Error('User not authenticated');
+
   const { data, error } = await supabase
     .from('notes')
-    .select('id, title, tags, content, lastEdited, isArchived')
+    .select('*')
     .eq('id', id)
+    .eq('user_id', user.id)
     .single();
 
   if (error || !data) {
