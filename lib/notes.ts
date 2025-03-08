@@ -42,3 +42,19 @@ export const getNotes = async (tag?: string, isArchived?: boolean) => {
     return [];
   }
 };
+
+export const getNote = async (id: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('notes')
+    .select('id, title, tags, content, lastEdited, isArchived')
+    .eq('id', id)
+    .single();
+
+  if (error || !data) {
+    console.error('Error fetching note:', error?.message || 'Note not found');
+    return null;
+  }
+
+  return data;
+};
