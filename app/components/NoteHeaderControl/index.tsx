@@ -29,8 +29,6 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
     }
   };
 
-  const handleDelete = async () => {};
-
   useEffect(() => {
     setMounted(true);
   }, []);
