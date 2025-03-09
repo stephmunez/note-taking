@@ -18,6 +18,7 @@ const Note = async ({ id }: NoteProps) => {
         title={note.title}
         tags={note.tags}
         lastEdited={note.lastEdited}
+        isArchived={note.isArchived}
       />
       <div className="flex w-full flex-col gap-3">
         <div className="text-sm leading-[1.3] tracking-[-0.2px] text-neutral-800 transition-colors duration-300 dark:text-neutral-100">
