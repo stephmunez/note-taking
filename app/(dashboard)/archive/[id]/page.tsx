@@ -3,17 +3,15 @@ import { Suspense } from 'react';
 import Note from '../../../components/Note';
 import NoteHeaderControl from '../../../components/NoteHeaderControl';
 
-interface Params {
-  id: string;
+interface generateMetadataProps {
+  params: Promise<{ id: string }>;
 }
 
 interface ArchivedNoteProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
-export const generateMetadata = async ({ params }: { params: Params }) => {
+export const generateMetadata = async ({ params }: generateMetadataProps) => {
   const { id } = await params;
   const supabase = await createClient();
   const { data, error } = await supabase

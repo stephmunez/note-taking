@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
 
+interface generateMetadataProps {
+  params: Promise<{ id: string }>;
+}
+
 interface EditNoteProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 interface Note {
@@ -15,12 +17,8 @@ interface Note {
   isArchived: boolean;
 }
 
-interface Params {
-  id: string;
-}
-
-export const generateMetadata = async ({ params }: { params: Params }) => {
-  const { id } = params;
+export const generateMetadata = async ({ params }: generateMetadataProps) => {
+  const { id } = await params;
   const res = await fetch(`http://localhost:4000/notes/${id}`);
   const note = await res.json();
   return { title: `Note Taking | Edit ${note.title}` };
