@@ -3,23 +3,14 @@ import { createClient } from '@/utils/supabase/server';
 import { Suspense } from 'react';
 import NoteHeaderControl from '../../../components/NoteHeaderControl';
 
+interface Params {
+  id: string;
+}
+
 interface NotePageProps {
   params: {
     id: string;
   };
-}
-
-interface Note {
-  id: string;
-  title: string;
-  tags: string[];
-  content: string;
-  lastEdited: string;
-  isArchived: boolean;
-}
-
-interface Params {
-  id: string;
 }
 
 export const generateMetadata = async ({ params }: { params: Params }) => {
