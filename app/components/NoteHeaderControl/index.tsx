@@ -8,6 +8,7 @@ import DeleteNoteModal from '../DeleteNoteModal';
 import IconArchive from '../IconArchive';
 import IconArrowLeft from '../IconArrowLeft';
 import IconDelete from '../IconDelete';
+import IconRestore from '../IconRestore';
 
 interface NoteHeaderControlProps {
   id: string;
@@ -67,14 +68,26 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
               theme={currentTheme}
             />
           </button>
-          <button>
-            <IconArchive
-              darkColor="#CACFD8"
-              width={18}
-              height={18}
-              theme={currentTheme}
-            />
-          </button>
+          {isArchived ? (
+            <button>
+              <IconRestore
+                darkColor="#CACFD8"
+                width={18}
+                height={18}
+                theme={currentTheme}
+              />
+            </button>
+          ) : (
+            <button>
+              <IconArchive
+                darkColor="#CACFD8"
+                width={18}
+                height={18}
+                theme={currentTheme}
+              />
+            </button>
+          )}
+
           <Link
             className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500"
             href={isArchived ? `/archive/edit/${id}` : `/notes/edit/${id}`}
