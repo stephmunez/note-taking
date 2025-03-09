@@ -32,14 +32,20 @@ const NotesList = async ({ tag, isArchived }: NotesListProps) => {
           {isArchived ? (
             <>
               No notes have been archived yet. Move notes here for safekeeping,
-              or <Link href={'/create'}>create a new note</Link>.
+              or{' '}
+              <Link href={'/create'} className="underline">
+                create a new note
+              </Link>
+              .
             </>
           ) : (
             <>
               You don&apos;t have any
-              {tag && tag.charAt(0).toUpperCase() + tag.slice(1)} notes yet.
-              <Link href={'/create'}>Start a new note</Link> to capture your
-              thoughts and ideas.
+              {tag && tag.charAt(0).toUpperCase() + tag.slice(1)} notes yet.{' '}
+              <Link href={'/create'} className="underline">
+                Start a new note
+              </Link>{' '}
+              to capture your thoughts and ideas.
             </>
           )}
         </p>
