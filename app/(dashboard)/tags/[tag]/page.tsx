@@ -4,16 +4,14 @@ import NotesList from '../../../components/NotesList';
 import TagHeaderControl from '../../../components/TagHeaderControl';
 
 interface TagProps {
-  params: {
-    tag: string;
-  };
+  params: Promise<{ tag: string }>;
 }
 
-interface Params {
-  tag: string;
+interface generateMetadataProps {
+  params: Promise<{ tag: string }>;
 }
 
-export const generateMetadata = async ({ params }: { params: Params }) => {
+export const generateMetadata = async ({ params }: generateMetadataProps) => {
   const { tag } = await params;
   return {
     title: `Note Taking | Tags | ${tag.charAt(0).toUpperCase() + tag.slice(1)}`,
