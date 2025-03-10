@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import ArchiveNoteModal from '../ArchiveNoteModal';
 import DeleteNoteModal from '../DeleteNoteModal';
 import IconArchive from '../IconArchive';
 import IconArrowLeft from '../IconArrowLeft';
@@ -19,6 +20,7 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isDeleteNoteModalOpen, setIsDeleteNoteModalOpen] = useState(false);
+  const [isArchiveNoteModalOpen, setIsArchiveNoteModalOpen] = useState(false);
 
   const router = useRouter();
 
@@ -78,7 +80,7 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
               />
             </button>
           ) : (
-            <button>
+            <button onClick={() => setIsArchiveNoteModalOpen(true)}>
               <IconArchive
                 darkColor="#CACFD8"
                 width={18}
@@ -99,6 +101,12 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
       {isDeleteNoteModalOpen && (
         <DeleteNoteModal
           onClose={() => setIsDeleteNoteModalOpen(false)}
+          id={id}
+        />
+      )}
+      {isArchiveNoteModalOpen && (
+        <ArchiveNoteModal
+          onClose={() => setIsArchiveNoteModalOpen(false)}
           id={id}
         />
       )}

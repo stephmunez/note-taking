@@ -79,7 +79,7 @@ const ResetPasswordForm = () => {
                 width={20}
                 height={20}
                 lightColor="#717784"
-                darkColor="#717784"
+                darkColor="#99A0AE"
               />
             ) : (
               <IconShowPassword
@@ -87,7 +87,7 @@ const ResetPasswordForm = () => {
                 width={20}
                 height={20}
                 lightColor="#717784"
-                darkColor="#717784"
+                darkColor="#99A0AE"
               />
             )}
           </button>
@@ -121,7 +121,7 @@ const ResetPasswordForm = () => {
                 width={20}
                 height={20}
                 lightColor="#717784"
-                darkColor="#717784"
+                darkColor="#99A0AE4"
               />
             ) : (
               <IconShowPassword
@@ -129,7 +129,7 @@ const ResetPasswordForm = () => {
                 width={20}
                 height={20}
                 lightColor="#717784"
-                darkColor="#717784"
+                darkColor="#99A0AE"
               />
             )}
           </button>
