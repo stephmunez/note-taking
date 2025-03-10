@@ -10,6 +10,7 @@ import IconArchive from '../IconArchive';
 import IconArrowLeft from '../IconArrowLeft';
 import IconDelete from '../IconDelete';
 import IconRestore from '../IconRestore';
+import RestoreNoteModal from '../RestoreNoteModal';
 
 interface NoteHeaderControlProps {
   id: string;
@@ -21,6 +22,7 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
   const [mounted, setMounted] = useState(false);
   const [isDeleteNoteModalOpen, setIsDeleteNoteModalOpen] = useState(false);
   const [isArchiveNoteModalOpen, setIsArchiveNoteModalOpen] = useState(false);
+  const [isRestoreNoteModalOpen, setIsRestoreNoteModalOpen] = useState(false);
 
   const router = useRouter();
 
@@ -71,7 +73,7 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
             />
           </button>
           {isArchived ? (
-            <button>
+            <button onClick={() => setIsRestoreNoteModalOpen(true)}>
               <IconRestore
                 darkColor="#CACFD8"
                 width={18}
@@ -106,6 +108,12 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
       )}
       {isArchiveNoteModalOpen && (
         <ArchiveNoteModal
+          onClose={() => setIsArchiveNoteModalOpen(false)}
+          id={id}
+        />
+      )}
+      {isRestoreNoteModalOpen && (
+        <RestoreNoteModal
           onClose={() => setIsArchiveNoteModalOpen(false)}
           id={id}
         />
