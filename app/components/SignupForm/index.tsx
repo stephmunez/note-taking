@@ -83,7 +83,7 @@ const SignupForm = ({ signup }: SignupFormProps) => {
                 width={20}
                 height={20}
                 lightColor="#717784"
-                darkColor="#717784"
+                darkColor="#99A0AE"
               />
             ) : (
               <IconShowPassword
@@ -91,7 +91,7 @@ const SignupForm = ({ signup }: SignupFormProps) => {
                 width={20}
                 height={20}
                 lightColor="#717784"
-                darkColor="#717784"
+                darkColor="#99A0AE"
               />
             )}
           </button>

@@ -65,7 +65,7 @@ const ChangePasswordForm = () => {
                   width={20}
                   height={20}
                   lightColor="#717784"
-                  darkColor="#717784"
+                  darkColor="#99A0AE"
                 />
               ) : (
                 <IconShowPassword
@@ -73,7 +73,7 @@ const ChangePasswordForm = () => {
                   width={20}
                   height={20}
                   lightColor="#717784"
-                  darkColor="#717784"
+                  darkColor="#99A0AE"
                 />
               )}
             </button>
@@ -105,7 +105,7 @@ const ChangePasswordForm = () => {
                   width={20}
                   height={20}
                   lightColor="#717784"
-                  darkColor="#717784"
+                  darkColor="#99A0AE"
                 />
               ) : (
                 <IconShowPassword
@@ -113,7 +113,7 @@ const ChangePasswordForm = () => {
                   width={20}
                   height={20}
                   lightColor="#717784"
-                  darkColor="#717784"
+                  darkColor="#99A0AE"
                 />
               )}
             </button>
@@ -145,7 +145,7 @@ const ChangePasswordForm = () => {
                   width={20}
                   height={20}
                   lightColor="#717784"
-                  darkColor="#717784"
+                  darkColor="#99A0AE"
                 />
               ) : (
                 <IconShowPassword
@@ -153,7 +153,7 @@ const ChangePasswordForm = () => {
                   width={20}
                   height={20}
                   lightColor="#717784"
-                  darkColor="#717784"
+                  darkColor="#99A0AE"
                 />
               )}
             </button>
