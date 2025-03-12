@@ -110,8 +110,7 @@ const CreateNewNote = () => {
         id="create-note"
         onSubmit={handleCreateNote}
       >
-        <input
-          type="text"
+        <textarea
           id="title"
           name="title"
           className="bg-transparent text-2xl font-bold leading-[1.2] tracking-[-0.5px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-950 placeholder:opacity-100 focus:outline-none dark:text-white dark:placeholder:text-neutral-0"
@@ -121,7 +120,7 @@ const CreateNewNote = () => {
         />
 
         <div className="flex w-full flex-col gap-1 border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800">
-          <div className="flex items-center gap-2">
+          <div className="flex items-start gap-2">
             <div className="flex w-1/3 items-center gap-[0.375rem]">
               <IconTag
                 darkColor="#CACFD8"
@@ -149,6 +148,11 @@ const CreateNewNote = () => {
                     .split(',')
                     .map((tag) => tag.trim())
                     .filter((tag) => tag)
+                    .map(
+                      (tag) =>
+                        tag.charAt(0).toUpperCase() +
+                        tag.slice(1).toLowerCase(),
+                    )
                     .join(', '),
                 );
               }}
@@ -178,7 +182,8 @@ const CreateNewNote = () => {
         <textarea
           name="content"
           id="content"
-          className="h-44 w-full resize-none bg-transparent text-sm leading-[1.2] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 focus:outline-none dark:text-neutral-300"
+          rows={28}
+          className="w-full resize-none bg-transparent text-sm leading-[1.2] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 focus:outline-none dark:text-neutral-300"
           placeholder="Start typing your note here…"
           value={content}
           onChange={(e) => setContent(e.target.value)}
