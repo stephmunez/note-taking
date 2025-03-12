@@ -1,49 +1,40 @@
-import { notFound } from 'next/navigation';
+import { createClient } from '@/utils/supabase/server';
+import EditNote from '../../../../components/EditNote';
+import NoteHeaderControl from '../../../../components/NoteHeaderControl';
 
 interface generateMetadataProps {
   params: Promise<{ id: string }>;
 }
 
-interface EditNoteProps {
+interface EditNotePageProps {
   params: Promise<{ id: string }>;
-}
-
-interface Note {
-  id: string;
-  title: string;
-  tags: string[];
-  content: string;
-  lastEdited: string;
-  isArchived: boolean;
 }
 
 export const generateMetadata = async ({ params }: generateMetadataProps) => {
   const { id } = await params;
-  const res = await fetch(`http://localhost:4000/notes/${id}`);
-  const note = await res.json();
-  return { title: `Note Taking | Edit ${note.title}` };
-};
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('notes')
+    .select('title')
+    .eq('id', id)
+    .single();
 
-const getNote = async (id: string): Promise<Note> => {
-  const res = await fetch('http://localhost:4000/notes/' + id);
-
-  if (!res.ok) {
-    notFound();
+  if (error || !data) {
+    console.error('Error fetching note:', error?.message || 'Note not found');
+    return { title: 'Note Taking | Not Found' };
   }
-
-  return res.json();
+  return { title: `Note Taking | Edit | ${data.title}` };
 };
 
-const EditNote = async ({ params }: EditNoteProps) => {
+const EditNotePage = async ({ params }: EditNotePageProps) => {
   const { id } = await params;
-  const note = await getNote(id);
 
   return (
-    <main>
-      <h1>{note.title}</h1>
-      <p>Note ID: {note.id}</p>
+    <main className="flex min-h-[calc(100vh-108px)] w-full flex-col gap-3 rounded-t-lg bg-neutral-0 px-4 py-5 dark:bg-neutral-950">
+      <NoteHeaderControl id={id} isEdit={true} />
+      <EditNote id={id} />
     </main>
   );
 };
 
-export default EditNote;
+export default EditNotePage;
