@@ -15,14 +15,21 @@ import RestoreNoteModal from '../RestoreNoteModal';
 interface NoteHeaderControlProps {
   id: string;
   isArchived?: boolean;
+  isEdit?: boolean;
 }
 
-const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
+const NoteHeaderControl = ({
+  id,
+  isArchived,
+  isEdit,
+}: NoteHeaderControlProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isDeleteNoteModalOpen, setIsDeleteNoteModalOpen] = useState(false);
   const [isArchiveNoteModalOpen, setIsArchiveNoteModalOpen] = useState(false);
   const [isRestoreNoteModalOpen, setIsRestoreNoteModalOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
   const router = useRouter();
 
@@ -34,8 +41,25 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
     }
   };
 
+  const handleSave = async () => {
+    setSaving(true);
+    window.dispatchEvent(new CustomEvent('save-note'));
+    setIsEdited(false);
+    setSaving(false);
+  };
+
   useEffect(() => {
     setMounted(true);
+
+    const handleNoteEdited = () => setIsEdited(true);
+    const handleNoteNotEdited = () => setIsEdited(false);
+    window.addEventListener('note-edited', handleNoteEdited);
+    window.addEventListener('note-not-edited', handleNoteNotEdited);
+
+    return () => {
+      window.removeEventListener('note-edited', handleNoteEdited);
+      window.removeEventListener('note-not-edited', handleNoteNotEdited);
+    };
   }, []);
 
   if (!mounted) {
@@ -92,12 +116,22 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
             </button>
           )}
 
-          <Link
-            className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500"
-            href={isArchived ? `/archive/edit/${id}` : `/notes/edit/${id}`}
-          >
-            Edit Note
-          </Link>
+          {isEdit ? (
+            <button
+              className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500 transition-colors duration-300 disabled:text-blue-500/70"
+              onClick={handleSave}
+              disabled={!isEdited}
+            >
+              {saving ? 'Saving...' : 'Save Note'}
+            </button>
+          ) : (
+            <Link
+              className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500"
+              href={isArchived ? `/archive/edit/${id}` : `/notes/edit/${id}`}
+            >
+              Edit Note
+            </Link>
+          )}
         </div>
       </div>
       {isDeleteNoteModalOpen && (
@@ -114,7 +148,7 @@ const NoteHeaderControl = ({ id, isArchived }: NoteHeaderControlProps) => {
       )}
       {isRestoreNoteModalOpen && (
         <RestoreNoteModal
-          onClose={() => setIsArchiveNoteModalOpen(false)}
+          onClose={() => setIsRestoreNoteModalOpen(false)}
           id={id}
         />
       )}
