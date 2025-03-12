@@ -50,3 +50,43 @@ export async function getClientNotes(): Promise<Note[]> {
     return [];
   }
 }
+
+export async function getClientNote(id: string): Promise<Note | null> {
+  try {
+    const supabase = createClient();
+
+    // Get the current user
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError) {
+      console.error(`Authentication error: ${userError.message}`);
+      return null;
+    }
+
+    if (!user) {
+      console.error('User not authenticated');
+      return null;
+    }
+
+    // Fetch the note for the authenticated user
+    const { data, error } = await supabase
+      .from('notes')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error(`Database error: ${error.message}`);
+      return null;
+    }
+
+    return data || null;
+  } catch (error) {
+    console.error('Failed to fetch note:', error);
+    return null;
+  }
+}
