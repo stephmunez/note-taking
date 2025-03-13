@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import IconArrowLeft from '../IconArrowLeft';
 import IconClock from '../IconClock';
 import IconTag from '../IconTag';
+import { Toast, ToastContainer } from '../Toast';
 
 const CreateNewNote = () => {
   const { theme, systemTheme } = useTheme();
@@ -14,6 +15,10 @@ const CreateNewNote = () => {
   const [title, setTitle] = useState<string>('');
   const [tags, setTags] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState<'success' | 'error'>('success');
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleGoBack = () => {
     if (window.history.length > 2) {
@@ -25,6 +30,7 @@ const CreateNewNote = () => {
 
   const handleCreateNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSaving(true);
 
     try {
       const newNote = {
@@ -50,17 +56,38 @@ const CreateNewNote = () => {
         throw new Error(data.error?.message || 'Failed to create note');
       }
 
-      router.push('/');
+      // Show success toast
+      setToastMessage('Note created successfully!');
+      setToastType('success');
+      setShowToast(true);
+      setIsSaving(false);
 
-      // Optionally, redirect or update UI after success
+      // Navigate after a short delay to allow the toast to be seen
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
     } catch (error) {
       console.error(error);
+      // Show error toast
+      setToastMessage('Failed to create note. Please try again.');
+      setToastType('error');
+      setShowToast(true);
+      setIsSaving(false);
     }
   };
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
   if (!mounted) {
     return null;
@@ -99,8 +126,9 @@ const CreateNewNote = () => {
             className="text-sm font-normal leading-[1.3] tracking-[-0.2px] text-blue-500 transition-colors duration-300"
             type="submit"
             form="create-note"
+            disabled={isSaving}
           >
-            Save Note
+            {isSaving ? 'Saving...' : 'Save Note'}
           </button>
         </div>
       </div>
@@ -189,6 +217,17 @@ const CreateNewNote = () => {
           onChange={(e) => setContent(e.target.value)}
         />
       </form>
+
+      {/* Toast notification */}
+      <ToastContainer>
+        {showToast && (
+          <Toast
+            message={toastMessage}
+            type={toastType}
+            onClose={() => setShowToast(false)}
+          />
+        )}
+      </ToastContainer>
     </>
   );
 };
