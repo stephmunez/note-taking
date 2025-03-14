@@ -1,27 +1,24 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import IconDelete from '../IconDelete';
 
 interface DeleteNoteModalProps {
   onClose: () => void;
   id: string;
+  onActionComplete?: (success: boolean) => void;
 }
 
-const DeleteNoteModal = ({ onClose, id }: DeleteNoteModalProps) => {
+const DeleteNoteModal = ({
+  onClose,
+  id,
+  onActionComplete,
+}: DeleteNoteModalProps) => {
   const { theme, systemTheme } = useTheme();
-  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, [theme]);
-
-  if (!mounted) return null;
-  const currentTheme = theme === 'system' ? systemTheme : theme;
 
   const handleDelete = async (id: string) => {
     setLoading(true);
@@ -31,16 +28,28 @@ const DeleteNoteModal = ({ onClose, id }: DeleteNoteModalProps) => {
       });
 
       if (res.ok) {
-        router.replace('/'); // Redirect to login after logout
+        if (onActionComplete) onActionComplete(true);
+        onClose();
       } else {
-        console.error('Delete failed');
+        if (onActionComplete) onActionComplete(false);
       }
     } catch (error) {
-      console.error('Error logging out:', error);
+      console.error('Error deleting note:', error);
+      if (onActionComplete) onActionComplete(false);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, [theme]);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const currentTheme = theme === 'system' ? systemTheme : theme;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/50 px-4">
