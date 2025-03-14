@@ -160,7 +160,7 @@ const NoteHeaderControl = ({
           id={id}
           onActionComplete={(success) => {
             if (success) {
-              showNotification('Note deleted successfully!', 'success');
+              showNotification('Note permanently deleted.', 'success');
               setTimeout(() => router.push('/'), 1500);
             } else {
               showNotification('Failed to delete note', 'error');
@@ -175,7 +175,7 @@ const NoteHeaderControl = ({
           id={id}
           onActionComplete={(success) => {
             if (success) {
-              showNotification('Note archived successfully!', 'success');
+              showNotification('Note archived.', 'success');
               setTimeout(() => router.push('/'), 1500);
             } else {
               showNotification('Failed to archive note', 'error');
@@ -190,7 +190,7 @@ const NoteHeaderControl = ({
           id={id}
           onActionComplete={(success) => {
             if (success) {
-              showNotification('Note restored successfully!', 'success');
+              showNotification('Note restored to active notes.', 'success');
               setTimeout(() => router.push('/'), 1500);
             } else {
               showNotification('Failed to restore note', 'error');
