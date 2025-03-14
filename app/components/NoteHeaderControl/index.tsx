@@ -11,6 +11,7 @@ import IconArrowLeft from '../IconArrowLeft';
 import IconDelete from '../IconDelete';
 import IconRestore from '../IconRestore';
 import RestoreNoteModal from '../RestoreNoteModal';
+import { Toast, ToastContainer } from '../Toast';
 
 interface NoteHeaderControlProps {
   id: string;
@@ -30,6 +31,9 @@ const NoteHeaderControl = ({
   const [isRestoreNoteModalOpen, setIsRestoreNoteModalOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
   const router = useRouter();
 
@@ -48,6 +52,12 @@ const NoteHeaderControl = ({
     setSaving(false);
   };
 
+  const showNotification = (message: string, type: 'success' | 'error') => {
+    setToastMessage(message);
+    setToastType(type);
+    setShowToast(true);
+  };
+
   useEffect(() => {
     setMounted(true);
 
@@ -61,6 +71,15 @@ const NoteHeaderControl = ({
       window.removeEventListener('note-not-edited', handleNoteNotEdited);
     };
   }, []);
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
   if (!mounted) {
     return null;
@@ -134,24 +153,61 @@ const NoteHeaderControl = ({
           )}
         </div>
       </div>
+
       {isDeleteNoteModalOpen && (
         <DeleteNoteModal
           onClose={() => setIsDeleteNoteModalOpen(false)}
           id={id}
+          onActionComplete={(success) => {
+            if (success) {
+              showNotification('Note deleted successfully!', 'success');
+              setTimeout(() => router.push('/'), 1500);
+            } else {
+              showNotification('Failed to delete note', 'error');
+            }
+          }}
         />
       )}
+
       {isArchiveNoteModalOpen && (
         <ArchiveNoteModal
           onClose={() => setIsArchiveNoteModalOpen(false)}
           id={id}
+          onActionComplete={(success) => {
+            if (success) {
+              showNotification('Note archived successfully!', 'success');
+              setTimeout(() => router.push('/'), 1500);
+            } else {
+              showNotification('Failed to archive note', 'error');
+            }
+          }}
         />
       )}
+
       {isRestoreNoteModalOpen && (
         <RestoreNoteModal
           onClose={() => setIsRestoreNoteModalOpen(false)}
           id={id}
+          onActionComplete={(success) => {
+            if (success) {
+              showNotification('Note restored successfully!', 'success');
+              setTimeout(() => router.push('/'), 1500);
+            } else {
+              showNotification('Failed to restore note', 'error');
+            }
+          }}
         />
       )}
+
+      <ToastContainer>
+        {showToast && (
+          <Toast
+            message={toastMessage}
+            type={toastType}
+            onClose={() => setShowToast(false)}
+          />
+        )}
+      </ToastContainer>
     </>
   );
 };
