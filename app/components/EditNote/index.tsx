@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import IconClock from '../IconClock';
 import IconTag from '../IconTag';
+import { Toast, ToastContainer } from '../Toast';
 
 interface EditNoteProps {
   id: string;
@@ -31,8 +32,10 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
   const [initialTitle, setInitialTitle] = useState('');
   const [initialContent, setInitialContent] = useState('');
   const [initialTags, setInitialTags] = useState('');
-
   const [isEdited, setIsEdited] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newTitle = e.target.value;
@@ -62,6 +65,12 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
         newContent !== initialContent ||
         newTags !== initialTags,
     );
+  };
+
+  const showNotification = (message: string, type: 'success' | 'error') => {
+    setToastMessage(message);
+    setToastType(type);
+    setShowToast(true);
   };
 
   useEffect(() => {
@@ -118,11 +127,14 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
 
         if (res.ok) {
           if (isArchive) {
-            router.push(`/archive/${id}`);
+            showNotification('Note saved successfully!', 'success');
+            setTimeout(() => router.push(`/archive/${id}`), 1500);
           } else {
-            router.push(`/notes/${id}`);
+            showNotification('Note saved successfully!', 'success');
+            setTimeout(() => router.push(`/notes/${id}`), 1500);
           }
         } else {
+          showNotification('Failed to edit note', 'error');
           console.error('Update failed');
         }
       } catch (error) {
@@ -160,6 +172,15 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
       return () => clearTimeout(handler);
     }
   }, [isEdited]);
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
   if (!mounted) {
     return null;
@@ -272,6 +293,16 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
           onChange={handleContentChange}
         />
       </form>
+
+      <ToastContainer>
+        {showToast && (
+          <Toast
+            message={toastMessage}
+            type={toastType}
+            onClose={() => setShowToast(false)}
+          />
+        )}
+      </ToastContainer>
     </>
   );
 };
