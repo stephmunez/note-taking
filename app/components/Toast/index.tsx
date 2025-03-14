@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import IconCheckmark from '../IconCheckmark';
 import IconCross from '../IconCross';
+import IconInfo from '../IconInfo';
 
 interface ToastProps {
   message: string;
@@ -45,7 +46,15 @@ export const Toast = ({ message, type, onClose, isArchived }: ToastProps) => {
           <IconCheckmark width={20} height={20} />
         </div>
       ) : (
-        ''
+        <div className="flex h-6 w-6 items-center justify-center">
+          <IconInfo
+            theme={currentTheme}
+            darkColor="#FB3748"
+            lightColor="#FB3748"
+            width={20}
+            height={20}
+          />
+        </div>
       )}
 
       <div className="flex w-full items-center justify-between gap-2">
