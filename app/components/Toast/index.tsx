@@ -26,7 +26,7 @@ export const Toast = ({ message, type, onClose, isArchived }: ToastProps) => {
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onClose, 300);
-    }, 1500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [onClose]);
