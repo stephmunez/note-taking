@@ -1,26 +1,22 @@
 'use client';
 import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import IconRestore from '../IconRestore';
 
 interface RestoreNoteModalProps {
   onClose: () => void;
   id: string;
+  onActionComplete?: (success: boolean) => void;
 }
 
-const RestoreNoteModal = ({ onClose, id }: RestoreNoteModalProps) => {
+const RestoreNoteModal = ({
+  onClose,
+  id,
+  onActionComplete,
+}: RestoreNoteModalProps) => {
   const { theme, systemTheme } = useTheme();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, [theme]);
-
-  if (!mounted) return null;
-  const currentTheme = theme === 'system' ? systemTheme : theme;
 
   const handleRestore = async (id: string) => {
     setLoading(true);
@@ -32,22 +28,32 @@ const RestoreNoteModal = ({ onClose, id }: RestoreNoteModalProps) => {
         },
         body: JSON.stringify({
           isArchived: false,
-          lastEdited: new Date().toISOString(),
         }),
       });
 
       if (res.ok) {
+        if (onActionComplete) onActionComplete(true);
         onClose();
-        router.push(`/`);
       } else {
-        console.error('Restore failed');
+        if (onActionComplete) onActionComplete(false);
       }
     } catch (error) {
       console.error('Error archiving note:', error);
+      if (onActionComplete) onActionComplete(false);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, [theme]);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const currentTheme = theme === 'system' ? systemTheme : theme;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/50 px-4">
