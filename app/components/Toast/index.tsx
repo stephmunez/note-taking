@@ -4,7 +4,6 @@ import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import IconCheckmark from '../IconCheckmark';
-import IconCross from '../IconCross';
 import IconInfo from '../IconInfo';
 
 interface ToastProps {
@@ -27,7 +26,7 @@ export const Toast = ({ message, type, onClose, isArchived }: ToastProps) => {
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onClose, 300);
-    }, 1000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [onClose]);
@@ -70,16 +69,6 @@ export const Toast = ({ message, type, onClose, isArchived }: ToastProps) => {
           </Link>
         )}
       </div>
-
-      <button
-        onClick={() => {
-          setIsVisible(false);
-          setTimeout(onClose, 300);
-        }}
-        className="flex h-6 w-6 items-center justify-center"
-      >
-        <IconCross width={20} height={20} theme={currentTheme} />
-      </button>
     </div>
   );
 };
