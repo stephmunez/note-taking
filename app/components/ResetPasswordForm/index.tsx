@@ -148,8 +148,8 @@ const ResetPasswordForm = () => {
           <span className="min-w-5">
             <IconInfo
               theme={currentTheme}
-              darkColor="#FB3748"
-              lightColor="#FB3748"
+              darkColor="#21C16B"
+              lightColor="#21C16B"
               width={20}
               height={20}
             />

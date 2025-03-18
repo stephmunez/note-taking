@@ -4,12 +4,13 @@ import { createClient } from '@/utils/supabase/client';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import IconHidePassword from '../IconHidePassword';
+import IconInfo from '../IconInfo';
 import IconShowPassword from '../IconShowPassword';
 import { Toast, ToastContainer } from '../Toast';
 
 interface UserData {
   email?: string;
-  updated_at?: string;
+  password?: string;
 }
 
 const ChangePasswordForm = () => {
@@ -23,8 +24,9 @@ const ChangePasswordForm = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [verifyingPassword, setVerifyingPassword] = useState(false);
   const [fetchingUser, setFetchingUser] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
@@ -40,14 +42,11 @@ const ChangePasswordForm = () => {
         if (user) {
           setUserData({
             email: user.email,
-            updated_at: user.updated_at,
           });
-
-          // Set placeholder for current password
-          setOldPassword('••••••••');
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
+        showErrorToast('Failed to fetch user data');
       } finally {
         setFetchingUser(false);
       }
@@ -65,7 +64,7 @@ const ChangePasswordForm = () => {
     if (showToast) {
       const timer = setTimeout(() => {
         setShowToast(false);
-      }, 2000);
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [showToast]);
@@ -73,35 +72,99 @@ const ChangePasswordForm = () => {
   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme;
 
-  // Password validation
-  const validatePassword = () => {
-    // Clear the placeholder when user starts typing
-    if (oldPassword === '••••••••') {
-      setError('Please enter your current password');
+  const showErrorToast = (message: string) => {
+    setToastMessage(message);
+    setToastType('error');
+    setShowToast(true);
+  };
+
+  const showSuccessToast = (message: string) => {
+    setToastMessage(message);
+    setToastType('success');
+    setShowToast(true);
+  };
+
+  const validateCurrentPassword = async () => {
+    if (oldPassword.trim() === '') {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        oldPassword: 'Please enter your current password',
+      }));
       return false;
+    }
+
+    setVerifyingPassword(true);
+
+    try {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: userData?.email || '',
+        password: oldPassword,
+      });
+
+      if (signInError) {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          oldPassword: 'Current password is not correct',
+        }));
+
+        return false;
+      }
+
+      setFormErrors((prevErrors) => {
+        const updatedErrors = { ...prevErrors };
+        delete updatedErrors.oldPassword;
+        return updatedErrors;
+      });
+      return true;
+    } catch (error) {
+      console.error('Error verifying current password:', error);
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        oldPassword: 'Failed to verify current password',
+      }));
+      return false;
+    } finally {
+      setVerifyingPassword(false);
+    }
+  };
+
+  const validateNewPasswords = () => {
+    const errors: { [key: string]: string } = { ...formErrors };
+
+    if (newPassword === '') {
+      errors.newPassword = 'New password should not be empty';
+    } else if (newPassword.length < 8) {
+      errors.newPassword = 'Password must be at least 8 characters';
+    } else {
+      delete errors.newPassword;
     }
 
     if (newPassword !== confirmNewPassword) {
-      setError('New passwords do not match');
-      return false;
+      errors.confirmNewPassword = 'New passwords do not match';
+    } else {
+      delete errors.confirmNewPassword;
     }
 
-    if (newPassword.length < 8) {
-      setError('Password must be at least 8 characters');
-      return false;
-    }
-
-    setError(null);
-    return true;
+    setFormErrors(errors);
+    return !errors.newPassword && !errors.confirmNewPassword;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validatePassword()) {
+    // First verify current password
+    const isCurrentPasswordValid = await validateCurrentPassword();
+    if (!isCurrentPasswordValid) {
       return;
     }
 
+    // Then validate new passwords
+    const areNewPasswordsValid = validateNewPasswords();
+    if (!areNewPasswordsValid) {
+      return;
+    }
+
+    // If all validations pass, update the password
     setLoading(true);
     try {
       // Get current user
@@ -123,52 +186,46 @@ const ChangePasswordForm = () => {
       }
 
       // Reset form with new placeholder values
-      setOldPassword('••••••••');
+      setOldPassword('');
       setNewPassword('');
       setConfirmNewPassword('');
+      setFormErrors({});
 
       // Show success toast
-      setToastMessage('Password updated successfully!');
-      setToastType('success');
-      setShowToast(true);
-    } catch (error: any) {
+      showSuccessToast('Password updated successfully!');
+    } catch (error: unknown) {
       console.error('Error updating password:', error);
-      setError(error.message || 'Failed to update password');
 
-      // Show error toast
-      setToastMessage(error.message || 'Failed to update password');
-      setToastType('error');
-      setShowToast(true);
+      let errorMessage = 'Failed to update password';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      showErrorToast(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle field focus - clear placeholder
-  const handleOldPasswordFocus = () => {
-    if (oldPassword === '••••••••') {
-      setOldPassword('');
-    }
+  const getInputErrorClass = (fieldName: string) => {
+    return formErrors[fieldName]
+      ? 'border-red-500 dark:border-red-500'
+      : 'border-neutral-300 dark:border-neutral-600';
   };
 
   return (
     <div className="flex w-full flex-col gap-5">
-      {error && (
-        <div className="rounded-lg bg-red-50 p-3 text-sm text-red-500 dark:bg-red-900/20 dark:text-red-400">
-          {error}
-        </div>
-      )}
-
       {fetchingUser ? (
-        <div className="flex items-center justify-center py-6">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
-        </div>
+        <p className="text-sm text-neutral-700 dark:text-neutral-300">
+          Loading user...
+        </p>
       ) : (
         <>
           <form
             id="change-password"
             className="flex w-full flex-col gap-6"
             onSubmit={handleSubmit}
+            noValidate
           >
             <div className="flex w-full flex-col gap-[0.375rem]">
               <label
@@ -184,9 +241,8 @@ const ChangePasswordForm = () => {
                   name="old-password"
                   value={oldPassword}
                   required
-                  className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
+                  className={`w-full rounded-lg border border-solid bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:text-neutral-0 ${getInputErrorClass('oldPassword')}`}
                   onChange={(e) => setOldPassword(e.target.value)}
-                  onFocus={handleOldPasswordFocus}
                 />
                 <button
                   onClick={() => setShowOldPassword(!showOldPassword)}
@@ -212,6 +268,20 @@ const ChangePasswordForm = () => {
                   )}
                 </button>
               </div>
+              {formErrors.oldPassword && (
+                <span className="flex items-center gap-2">
+                  <IconInfo
+                    theme={currentTheme}
+                    darkColor="#FB3748"
+                    lightColor="#FB3748"
+                    width={18}
+                    height={18}
+                  />
+                  <p className="text-xs text-red-500">
+                    {formErrors.oldPassword}
+                  </p>
+                </span>
+              )}
             </div>
             <div className="flex w-full flex-col gap-[0.375rem]">
               <label
@@ -227,7 +297,7 @@ const ChangePasswordForm = () => {
                   name="new-password"
                   value={newPassword}
                   required
-                  className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
+                  className={`w-full rounded-lg border border-solid bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:text-neutral-0 ${getInputErrorClass('newPassword')}`}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
                 <button
@@ -254,9 +324,33 @@ const ChangePasswordForm = () => {
                   )}
                 </button>
               </div>
-              <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-                Password must be at least 8 characters
-              </p>
+              {formErrors.newPassword ? (
+                <span className="flex items-center gap-2">
+                  <IconInfo
+                    theme={currentTheme}
+                    darkColor="#FB3748"
+                    lightColor="#FB3748"
+                    width={18}
+                    height={18}
+                  />
+                  <p className="text-xs text-red-500">
+                    {formErrors.newPassword}
+                  </p>
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <IconInfo
+                    theme={currentTheme}
+                    width={18}
+                    height={18}
+                    lightColor="#717784"
+                    darkColor="#99A0AE"
+                  />
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                    Password must be at least 8 characters
+                  </p>
+                </span>
+              )}
             </div>
             <div className="flex w-full flex-col gap-[0.375rem]">
               <label
@@ -272,7 +366,7 @@ const ChangePasswordForm = () => {
                   name="confirm-new-password"
                   value={confirmNewPassword}
                   required
-                  className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
+                  className={`w-full rounded-lg border border-solid bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:text-neutral-0 ${getInputErrorClass('confirmNewPassword')}`}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                 />
                 <button
@@ -301,18 +395,34 @@ const ChangePasswordForm = () => {
                   )}
                 </button>
               </div>
+              {formErrors.confirmNewPassword && (
+                <span className="flex items-center gap-2">
+                  <IconInfo
+                    theme={currentTheme}
+                    darkColor="#FB3748"
+                    lightColor="#FB3748"
+                    width={18}
+                    height={18}
+                  />
+                  <p className="text-xs text-red-500">
+                    {formErrors.confirmNewPassword}
+                  </p>
+                </span>
+              )}
             </div>
           </form>
           <button
-            className={`self-end rounded-lg px-4 py-3 text-sm font-medium leading-[1.2] tracking-[-0.2px] text-neutral-0 transition-colors duration-300 ${
-              loading
-                ? 'cursor-not-allowed bg-blue-400'
-                : 'bg-blue-500 hover:bg-blue-600'
+            className={`self-end rounded-lg bg-blue-500 px-4 py-3 text-sm font-medium leading-[1.2] tracking-[-0.2px] text-neutral-0 transition-colors duration-300 ${
+              loading || verifyingPassword ? 'cursor-not-allowed' : ''
             }`}
             form="change-password"
-            disabled={loading}
+            disabled={loading || verifyingPassword}
           >
-            {loading ? 'Updating...' : 'Save Password'}
+            {loading
+              ? 'Updating...'
+              : verifyingPassword
+                ? 'Verifying...'
+                : 'Save Password'}
           </button>
         </>
       )}
