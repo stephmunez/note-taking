@@ -30,16 +30,32 @@ const CreateNewNote = () => {
 
   const handleCreateNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!title.trim()) {
+      setToastMessage('Title cannot be empty');
+      setToastType('error');
+      setShowToast(true);
+      return;
+    }
+
+    if (!content.trim()) {
+      setToastMessage('Note content cannot be empty');
+      setToastType('error');
+      setShowToast(true);
+      return;
+    }
+
     setIsSaving(true);
 
     try {
       const newNote = {
-        title,
+        title: title.trim(),
         tags: tags
           .split(',')
           .map((tag) => tag.trim())
           .filter(Boolean),
-        content,
+        content: content.trim(),
         isArchived: false,
         lastEdited: new Date().toISOString(),
       };
@@ -123,10 +139,10 @@ const CreateNewNote = () => {
             Cancel
           </button>
           <button
-            className="text-sm font-normal leading-[1.3] tracking-[-0.2px] text-blue-500 transition-colors duration-300"
+            className="text-sm font-normal leading-[1.3] tracking-[-0.2px] transition-colors duration-300 text-blue-500 disabled:text-blue-500/70 disabled:cursor-not-allowed"
             type="submit"
             form="create-note"
-            disabled={isSaving}
+            disabled={isSaving || !title.trim() || !content.trim()}
           >
             {isSaving ? 'Saving...' : 'Save Note'}
           </button>
@@ -145,6 +161,7 @@ const CreateNewNote = () => {
           placeholder="Enter a title..."
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
         />
 
         <div className="flex w-full flex-col gap-1 border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800">
@@ -215,6 +232,7 @@ const CreateNewNote = () => {
           placeholder="Start typing your note here…"
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          required
         />
       </form>
 
