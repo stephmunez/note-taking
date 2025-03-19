@@ -36,7 +36,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
-  const [isSaving, setIsSaving] = useState(false);
+
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newTitle = e.target.value;
@@ -117,7 +117,6 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
         return;
       }
       
-      setIsSaving(true);
 
       const updatedNote = {
         title: title.trim(),
@@ -154,9 +153,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
       } catch (error) {
         console.error('Error updating note:', error);
         showNotification('Error saving note', 'error');
-      } finally {
-        setIsSaving(false);
-      }
+      } 
     };
 
     // Custom validation before allowing save event to proceed
@@ -323,16 +320,8 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
 
             <span className="text-sm leading-[1.2] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 dark:text-neutral-300">
               {formattedDate}
-              {isEdited && " • Edited"}
-              {isSaving && " • Saving..."}
             </span>
           </div>
-          
-          {!isValid && isEdited && (
-            <div className="mt-2 text-sm text-red-500">
-              {!title.trim() ? 'Title cannot be empty' : 'Note content cannot be empty'}
-            </div>
-          )}
         </div>
 
         <textarea
