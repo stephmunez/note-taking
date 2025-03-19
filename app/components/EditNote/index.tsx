@@ -36,6 +36,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newTitle = e.target.value;
@@ -104,14 +105,27 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
       e: Event | React.FormEvent<HTMLFormElement>,
     ) => {
       e.preventDefault();
+      
+      // Validate required fields
+      if (!title.trim()) {
+        showNotification('Title cannot be empty', 'error');
+        return;
+      }
+
+      if (!content.trim()) {
+        showNotification('Note content cannot be empty', 'error');
+        return;
+      }
+      
+      setIsSaving(true);
 
       const updatedNote = {
-        title,
+        title: title.trim(),
         tags: tags
           .split(',')
           .map((tag) => tag.trim())
           .filter(Boolean),
-        content,
+        content: content.trim(),
         isArchived: note?.isArchived ?? false,
         lastEdited: new Date().toISOString(),
       };
@@ -139,13 +153,35 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
         }
       } catch (error) {
         console.error('Error updating note:', error);
+        showNotification('Error saving note', 'error');
+      } finally {
+        setIsSaving(false);
       }
     };
 
+    // Custom validation before allowing save event to proceed
+    const handleValidateBeforeSave = (e: Event) => {
+      if (!title.trim() || !content.trim()) {
+        e.stopPropagation();
+        
+        if (!title.trim()) {
+          showNotification('Title cannot be empty', 'error');
+        } else if (!content.trim()) {
+          showNotification('Note content cannot be empty', 'error');
+        }
+        
+        return false;
+      }
+      return true;
+    };
+
+    // Add validation listener to intercept save attempts
     window.addEventListener('save-note', handleEditNote);
+    window.addEventListener('before-save-note', handleValidateBeforeSave, true);
 
     return () => {
       window.removeEventListener('save-note', handleEditNote);
+      window.removeEventListener('before-save-note', handleValidateBeforeSave, true);
     };
   }, [id, title, content, tags, router, isArchive, note?.isArchived]);
 
@@ -160,7 +196,12 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
   useEffect(() => {
     if (isEdited) {
       const handler = setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('note-edited'));
+        // Only dispatch note-edited if the content is valid
+        if (title.trim() && content.trim()) {
+          window.dispatchEvent(new CustomEvent('note-edited'));
+        } else {
+          window.dispatchEvent(new CustomEvent('note-invalid'));
+        }
       }, 300);
 
       return () => clearTimeout(handler);
@@ -171,7 +212,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
 
       return () => clearTimeout(handler);
     }
-  }, [isEdited]);
+  }, [isEdited, title, content]);
 
   useEffect(() => {
     if (showToast) {
@@ -211,6 +252,8 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
     return <p className="text-sm text-red-500">Note not found</p>;
   }
 
+  const isValid = title.trim() && content.trim();
+
   return (
     <>
       <form className="flex h-full w-full flex-col gap-3" id="create-note">
@@ -221,6 +264,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
           placeholder="Enter a title..."
           value={title}
           onChange={handleTitleChange}
+          required
         />
 
         <div className="flex w-full flex-col gap-1 border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800">
@@ -279,8 +323,16 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
 
             <span className="text-sm leading-[1.2] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 dark:text-neutral-300">
               {formattedDate}
+              {isEdited && " • Edited"}
+              {isSaving && " • Saving..."}
             </span>
           </div>
+          
+          {!isValid && isEdited && (
+            <div className="mt-2 text-sm text-red-500">
+              {!title.trim() ? 'Title cannot be empty' : 'Note content cannot be empty'}
+            </div>
+          )}
         </div>
 
         <textarea
@@ -291,6 +343,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
           placeholder="Start typing your note here…"
           value={content}
           onChange={handleContentChange}
+          required
         />
       </form>
 
