@@ -3,7 +3,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
-
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -28,9 +27,8 @@ export async function updateSession(request: NextRequest) {
   // Allow Supabase to process OAuth callback
   const url = request.nextUrl;
   const isOAuthCallback = url.searchParams.has('code');
-
   if (isOAuthCallback) {
-    return supabaseResponse; // Let Supabase handle the authentication flow
+    return supabaseResponse;
   }
 
   // Do not run code between createServerClient and supabase.auth.getUser()
@@ -46,12 +44,23 @@ export async function updateSession(request: NextRequest) {
     '/error',
   ];
 
+  // Redirect unauthenticated users to login page
   if (
     !user &&
     !authPages.some((page) => request.nextUrl.pathname.startsWith(page))
   ) {
     const newUrl = url.clone();
     newUrl.pathname = '/login';
+    return NextResponse.redirect(newUrl);
+  }
+
+  // Redirect authenticated users away from auth pages to home page
+  if (
+    user &&
+    authPages.some((page) => request.nextUrl.pathname.startsWith(page))
+  ) {
+    const newUrl = url.clone();
+    newUrl.pathname = '/';
     return NextResponse.redirect(newUrl);
   }
 
