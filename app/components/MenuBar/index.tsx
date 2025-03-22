@@ -26,7 +26,7 @@ const MenuItem = ({ href, icon, label, isActive }: MenuItemProps) => (
   >
     {icon}
     <span
-      className={`text-xs font-normal leading-[1.2] tracking-[-0.2px] transition-colors duration-300 ${
+      className={`hidden text-xs font-normal leading-[1.2] tracking-[-0.2px] transition-colors duration-300 md:block ${
         isActive ? 'text-blue-500' : 'text-neutral-600 dark:text-neutral-400'
       }`}
     >
@@ -36,7 +36,7 @@ const MenuItem = ({ href, icon, label, isActive }: MenuItemProps) => (
 );
 
 const Divider = () => (
-  <div className="†ransition-colors pointer-events-none h-[50px] min-w-px bg-neutral-100 duration-300 dark:bg-neutral-800"></div>
+  <div className="†ransition-colors pointer-events-none hidden h-[50px] min-w-px bg-neutral-100 duration-300 dark:bg-neutral-800 md:block"></div>
 );
 
 const MenuBar = () => {
