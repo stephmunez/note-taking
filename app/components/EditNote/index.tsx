@@ -37,7 +37,6 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
-
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newTitle = e.target.value;
     setTitle(newTitle);
@@ -105,7 +104,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
       e: Event | React.FormEvent<HTMLFormElement>,
     ) => {
       e.preventDefault();
-      
+
       // Validate required fields
       if (!title.trim()) {
         showNotification('Title cannot be empty', 'error');
@@ -116,7 +115,6 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
         showNotification('Note content cannot be empty', 'error');
         return;
       }
-      
 
       const updatedNote = {
         title: title.trim(),
@@ -153,20 +151,20 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
       } catch (error) {
         console.error('Error updating note:', error);
         showNotification('Error saving note', 'error');
-      } 
+      }
     };
 
     // Custom validation before allowing save event to proceed
     const handleValidateBeforeSave = (e: Event) => {
       if (!title.trim() || !content.trim()) {
         e.stopPropagation();
-        
+
         if (!title.trim()) {
           showNotification('Title cannot be empty', 'error');
         } else if (!content.trim()) {
           showNotification('Note content cannot be empty', 'error');
         }
-        
+
         return false;
       }
       return true;
@@ -178,7 +176,11 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
 
     return () => {
       window.removeEventListener('save-note', handleEditNote);
-      window.removeEventListener('before-save-note', handleValidateBeforeSave, true);
+      window.removeEventListener(
+        'before-save-note',
+        handleValidateBeforeSave,
+        true,
+      );
     };
   }, [id, title, content, tags, router, isArchive, note?.isArchived]);
 
@@ -253,7 +255,10 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
 
   return (
     <>
-      <form className="flex h-full w-full flex-col gap-3" id="create-note">
+      <form
+        className="flex h-full w-full flex-col gap-3 md:gap-4"
+        id="create-note"
+      >
         <textarea
           id="title"
           name="title"
@@ -264,7 +269,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
           required
         />
 
-        <div className="flex w-full flex-col gap-1 border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800">
+        <div className="flex w-full flex-col gap-1 border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800 md:gap-2">
           <div className="flex items-start gap-2">
             <div className="flex w-1/3 items-center gap-[0.375rem]">
               <IconTag
