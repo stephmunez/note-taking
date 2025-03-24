@@ -37,7 +37,7 @@ const NoteHead = ({ title, tags, lastEdited, isArchived }: NoteHeadProps) => {
       <h1 className="text-2xl font-bold leading-[1.2] tracking-[-0.5px] text-neutral-950 transition-colors duration-300 dark:text-white">
         {title}
       </h1>
-      <div className="flex w-full flex-col gap-1 border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800">
+      <div className="flex w-full flex-col gap-1 border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800 md:gap-2">
         <div className="flex items-center gap-2">
           <div className="flex w-1/3 items-center gap-[0.375rem]">
             <IconTag
