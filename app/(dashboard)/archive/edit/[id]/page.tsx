@@ -30,7 +30,7 @@ const EditArchiveNotePage = async ({ params }: EditArchiveNotePageProps) => {
   const { id } = await params;
 
   return (
-    <main className="flex min-h-[calc(100vh-108px)] w-full flex-col gap-3 rounded-t-lg bg-neutral-0 px-4 py-5 dark:bg-neutral-950">
+    <main className="flex min-h-[calc(100vh-108px)] w-full flex-col gap-3 rounded-t-lg bg-neutral-0 px-4 py-5 dark:bg-neutral-950 md:min-h-[calc(100vh-148px)] md:gap-4 md:px-6">
       <NoteHeaderControl id={id} isEdit={true} isArchived={true} />
       <EditNote id={id} isArchive={true} />
     </main>
