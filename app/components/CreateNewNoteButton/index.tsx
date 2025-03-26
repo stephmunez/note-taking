@@ -6,7 +6,7 @@ const CreateNewNoteButton = () => {
   return (
     <Link
       href={'/create'}
-      className="fixed bottom-[4.5rem] right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500"
+      className="fixed bottom-[4.5rem] right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500 md:bottom-24 md:right-8"
     >
       <Image src={iconPlus} width={32} height={32} alt="cross icon" />
     </Link>
