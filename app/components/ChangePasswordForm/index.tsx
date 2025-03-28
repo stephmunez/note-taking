@@ -214,7 +214,7 @@ const ChangePasswordForm = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex w-full flex-col gap-5 md:gap-6">
       {fetchingUser ? (
         <p className="text-sm text-neutral-700 dark:text-neutral-300">
           Loading user...

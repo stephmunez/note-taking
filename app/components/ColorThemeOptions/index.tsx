@@ -59,7 +59,7 @@ const ColorThemeOptions = () => {
 
   return (
     <>
-      <div className="f-full flex flex-col gap-5">
+      <div className="f-full flex flex-col gap-5 md:gap-6">
         <ul className="flex flex-col gap-4">
           {colorThemeOptions.map(
             ({ theme, icon: Icon, label, description }) => (
