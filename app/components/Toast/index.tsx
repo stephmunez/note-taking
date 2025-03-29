@@ -75,7 +75,7 @@ export const Toast = ({ message, type, onClose, isArchived }: ToastProps) => {
 
 export const ToastContainer = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="fixed bottom-20 right-4 z-50 flex flex-col gap-2">
+    <div className="fixed bottom-20 right-4 z-50 flex flex-col gap-2 md:bottom-24 md:right-8">
       {children}
     </div>
   );

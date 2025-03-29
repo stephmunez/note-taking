@@ -53,7 +53,7 @@ const DeleteNoteModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/50 px-4">
-      <div className="rounded-xl border border-solid border-neutral-200 bg-neutral-0 transition-colors duration-300 dark:border-neutral-600 dark:bg-neutral-700">
+      <div className="max-w-[440px] rounded-xl border border-solid border-neutral-200 bg-neutral-0 transition-colors duration-300 dark:border-neutral-600 dark:bg-neutral-700">
         <div className="flex gap-4 border-b border-solid border-neutral-200 p-5 transition-colors duration-300 dark:border-neutral-600">
           <div className="flex h-10 min-w-10 items-center justify-center rounded-lg bg-neutral-100 transition-colors duration-300 dark:bg-neutral-600">
             <IconDelete
