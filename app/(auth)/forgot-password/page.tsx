@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const Login = () => {
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-4 py-24 md:px-32 md:py-80">
+    <main className="flex min-h-screen w-full items-center justify-center px-4 py-24 md:px-32 md:py-80 lg:px-0 lg:py-64">
       <div className="flex w-full max-w-[522px] flex-col items-center gap-4 rounded-xl border border-solid border-neutral-200 bg-neutral-0 px-4 py-10 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950 md:px-8 md:py-12">
         <Logo />
         <div className="cl flex w-full flex-col items-center gap-2">
