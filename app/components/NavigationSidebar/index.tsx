@@ -87,7 +87,7 @@ const NavigationSidebar = () => {
     },
   ];
   return (
-    <header className="hidden min-h-screen w-[272px] flex-col gap-4 bg-neutral-0 px-4 py-3 transition-colors duration-300 dark:bg-neutral-950 lg:flex">
+    <header className="hidden min-h-screen w-[272px] flex-col gap-4 border-r border-solid border-neutral-200 bg-neutral-0 px-4 py-3 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950 lg:flex">
       <div className="h-max w-full py-3">
         <Logo />
       </div>
