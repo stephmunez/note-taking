@@ -90,7 +90,7 @@ const MenuBar = () => {
   ];
 
   return (
-    <footer className="fixed bottom-0 w-full border-t border-solid border-neutral-100 bg-neutral-0 px-8 py-3 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950">
+    <footer className="fixed bottom-0 w-full border-t border-solid border-neutral-100 bg-neutral-0 px-8 py-3 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950 lg:hidden">
       <nav>
         <ul className="flex w-full items-center justify-center md:gap-8">
           {menuItems.map((item, index) => (
