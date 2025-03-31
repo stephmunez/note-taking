@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} bg-neutral-100 font-sans text-neutral-950 antialiased transition-colors duration-300 dark:bg-neutral-800 dark:text-neutral-0`}
+        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} bg-neutral-100 font-sans text-neutral-950 antialiased transition-colors duration-300 dark:bg-neutral-800 dark:text-neutral-0 lg:flex`}
       >
         <ThemeProvider attribute="class" defaultTheme="system">
           {children}
