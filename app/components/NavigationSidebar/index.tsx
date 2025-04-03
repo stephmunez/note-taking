@@ -18,22 +18,19 @@ interface MenuItemProps {
   theme: string;
 }
 
-const NavigationItem = ({
-  href,
-  icon,
-  label,
-  isActive,
-  theme,
-}: MenuItemProps) => (
+const NavigationItem = ({ href, icon, label, isActive, theme }: MenuItemProps) => (
   <Link
     className={`flex w-full items-center gap-2 px-3 py-[0.625rem] ${
       isActive ? 'rounded-lg bg-neutral-100 dark:bg-neutral-800' : ''
     }`}
     href={href}
+    aria-current={isActive ? 'page' : undefined} 
   >
     {icon}
     <span
-      className={`flex-1 text-sm font-medium leading-[1.2] tracking-[-0.2px] transition-colors duration-300 ${isActive ? 'text-neutral-950 dark:text-neutral-0' : 'text-neutral-700 dark:text-neutral-200'} `}
+      className={`flex-1 text-sm font-medium leading-[1.2] tracking-[-0.2px] transition-colors duration-300 ${
+        isActive ? 'text-neutral-950 dark:text-neutral-0' : 'text-neutral-700 dark:text-neutral-200'
+      }`}
     >
       {label}
     </span>
@@ -42,7 +39,7 @@ const NavigationItem = ({
 );
 
 const Divider = () => (
-  <div className="†ransition-colors pointer-events-none hidden h-px w-full bg-neutral-100 duration-300 dark:bg-neutral-800 md:block"></div>
+  <div className="transition-colors pointer-events-none hidden h-px w-full bg-neutral-100 duration-300 dark:bg-neutral-800 md:block"></div>
 );
 
 const NavigationSidebar = () => {
@@ -58,60 +55,42 @@ const NavigationSidebar = () => {
     return null;
   }
 
-  const currentTheme =
-    theme === 'system' ? (systemTheme ?? 'light') : (theme ?? 'light');
-
-  const isActive = (route: string) =>
-    pathname === route || pathname.startsWith(`${route}/`);
+  const currentTheme = theme === 'system' ? systemTheme ?? 'light' : theme ?? 'light';
+  const isActive = (route: string) => pathname === route || pathname.startsWith(`${route}/`);
 
   const navigationItems = [
     {
       href: '/',
-      icon: (
-        <IconHome
-          theme={currentTheme}
-          isActive={isActive('/')}
-          lightColor="#2B303B"
-          darkColor="#E0E4EA"
-        />
-      ),
+      icon: <IconHome theme={currentTheme} isActive={isActive('/')} lightColor="#2B303B" darkColor="#E0E4EA" />,
       label: 'All Notes',
     },
-
     {
       href: '/archive',
-      icon: (
-        <IconArchive theme={currentTheme} isActive={isActive('/archive')} />
-      ),
-      label: 'Archived ',
+      icon: <IconArchive theme={currentTheme} isActive={isActive('/archive')} />,
+      label: 'Archived',
     },
   ];
+
   return (
-    <header className="hidden min-h-screen w-[272px] flex-col gap-4 border-r border-solid border-neutral-200 bg-neutral-0 px-4 py-3 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950 lg:flex">
+    <nav
+      className="hidden min-h-screen w-[272px] flex-col gap-4 border-r border-solid border-neutral-200 bg-neutral-0 px-4 py-3 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950 lg:flex"
+      aria-label="Main navigation"
+    >
       <div className="h-max w-full py-3">
         <Logo />
       </div>
       <div className="flex w-full flex-col gap-2">
-        <nav>
-          <ul className="flex w-full flex-col gap-1">
-            {navigationItems.map((item) => (
-              <li className="w-full" key={item.href}>
-                <NavigationItem
-                  href={item.href}
-                  icon={item.icon}
-                  label={item.label}
-                  isActive={isActive(item.href)}
-                  theme={currentTheme}
-                />
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <ul className="flex w-full flex-col gap-1">
+          {navigationItems.map((item) => (
+            <li className="w-full" key={item.href}>
+              <NavigationItem href={item.href} icon={item.icon} label={item.label} isActive={isActive(item.href)} theme={currentTheme} />
+            </li>
+          ))}
+        </ul>
         <Divider />
-
         <NavigationTags />
       </div>
-    </header>
+    </nav>
   );
 };
 
