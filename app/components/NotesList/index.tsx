@@ -12,7 +12,13 @@ const NotesList = async ({ tag, isArchived }: NotesListProps) => {
   const notes = await getNotes(tag, isArchived);
 
   return (
-    <>
+    <div className="flex flex-col gap-4 lg:max-h-[calc(100vh-102px)] lg:min-h-[calc(100vh-102px)] lg:w-[290px] lg:overflow-auto lg:border-r lg:border-solid lg:pb-9 lg:pl-8 lg:pr-5 lg:pt-5 dark:lg:border-r-neutral-800">
+      <Link
+        className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
+        href={'/create'}
+      >
+        + Create New Note
+      </Link>
       {notes && notes.length ? (
         <ul className="flex flex-col gap-1">
           {notes.map((note, i) => (
@@ -50,7 +56,7 @@ const NotesList = async ({ tag, isArchived }: NotesListProps) => {
           )}
         </p>
       )}
-    </>
+    </div>
   );
 };
 
