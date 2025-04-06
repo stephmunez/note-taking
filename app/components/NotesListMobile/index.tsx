@@ -3,24 +3,18 @@ import Link from 'next/link';
 import React from 'react';
 import NoteItem from '../NoteItem';
 
-interface NotesListProps {
+interface NotesListMobileProps {
   tag?: string;
   isArchived?: boolean;
 }
 
-const NotesList = async ({ tag, isArchived }: NotesListProps) => {
+const NotesListMobile = async ({ tag, isArchived }: NotesListMobileProps) => {
   const notes = await getNotes(tag, isArchived);
 
   return (
-    <div className="hidden max-h-[calc(100vh-102px)] min-h-[calc(100vh-102px)] w-[290px] flex-col gap-4 overflow-auto border-r border-solid pb-9 pl-8 pr-5 pt-5 dark:border-r-neutral-800 lg:flex">
-      <Link
-        className="hidden items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 lg:flex"
-        href={'/create'}
-      >
-        + Create New Note
-      </Link>
+    <>
       {notes && notes.length ? (
-        <ul className="flex flex-col gap-1">
+        <ul className="flex flex-col gap-1 lg:hidden">
           {notes.map((note, i) => (
             <React.Fragment key={note.id}>
               <NoteItem note={note} />
@@ -56,8 +50,8 @@ const NotesList = async ({ tag, isArchived }: NotesListProps) => {
           )}
         </p>
       )}
-    </div>
+    </>
   );
 };
 
-export default NotesList;
+export default NotesListMobile;
