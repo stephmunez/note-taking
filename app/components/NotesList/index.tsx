@@ -12,9 +12,9 @@ const NotesList = async ({ tag, isArchived }: NotesListProps) => {
   const notes = await getNotes(tag, isArchived);
 
   return (
-    <div className="flex flex-col gap-4 lg:max-h-[calc(100vh-102px)] lg:min-h-[calc(100vh-102px)] lg:w-[290px] lg:overflow-auto lg:border-r lg:border-solid lg:pb-9 lg:pl-8 lg:pr-5 lg:pt-5 dark:lg:border-r-neutral-800">
+    <div className="hidden max-h-[calc(100vh-102px)] min-h-[calc(100vh-102px)] w-[290px] flex-col gap-4 overflow-auto border-r border-solid pb-9 pl-8 pr-5 pt-5 dark:border-r-neutral-800 lg:flex">
       <Link
-        className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
+        className="hidden items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 lg:flex"
         href={'/create'}
       >
         + Create New Note
