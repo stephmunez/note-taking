@@ -88,7 +88,7 @@ const NoteHeaderControl = ({
   const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
     <>
-      <div className="flex w-full items-center justify-between border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800 md:pb-4">
+      <div className="flex w-full items-center justify-between border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800 md:pb-4 lg:hidden">
         <button
           className="flex w-max items-center gap-1"
           onClick={handleGoBack}
