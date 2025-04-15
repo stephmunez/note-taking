@@ -28,7 +28,7 @@ const NotesListMobile = async ({ tag, isArchived }: NotesListMobileProps) => {
           ))}
         </ul>
       ) : (
-        <p className="rounded-lg border border-solid border-neutral-200 bg-neutral-100 p-2 text-sm leading-[1.3] tracking-[-0.2px] text-neutral-950 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-0">
+        <p className="rounded-lg border border-solid border-neutral-200 bg-neutral-100 p-2 text-sm leading-[1.3] tracking-[-0.2px] text-neutral-950 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-0 lg:hidden">
           {isArchived ? (
             <>
               No notes have been archived yet. Move notes here for safekeeping,
