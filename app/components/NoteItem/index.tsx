@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface Note {
   id: string;
@@ -15,16 +18,20 @@ interface NoteItemProps {
 
 const NoteItem = ({ note }: NoteItemProps) => {
   const { title, tags, lastEdited, id, isArchived } = note;
+  const pathname = usePathname();
+
   const formattedDate = new Date(lastEdited).toLocaleDateString('en-GB', {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
   });
 
+  const isActive = pathname === `/notes/${id}` || pathname === `/archive/${id}`;
+
   return (
     <li>
       <Link
-        className="flex flex-col gap-3 bg-white p-2 transition-colors duration-300 dark:bg-neutral-950"
+        className={`flex flex-col gap-3 rounded-md p-2 transition-colors duration-300 ${isActive ? 'bg-neutral-100 dark:bg-neutral-800' : 'bg-neutral-0 dark:bg-neutral-950'}`}
         href={isArchived ? `/archive/${id}` : `/notes/${id}`}
       >
         <h2 className="text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-950 transition-colors duration-300 dark:text-white">
