@@ -7,22 +7,23 @@ import { useEffect, useState } from 'react';
 import ArchiveNoteModal from '../ArchiveNoteModal';
 import DeleteNoteModal from '../DeleteNoteModal';
 import IconArchive from '../IconArchive';
+import IconArrowLeft from '../IconArrowLeft';
 import IconDelete from '../IconDelete';
 import IconRestore from '../IconRestore';
 import RestoreNoteModal from '../RestoreNoteModal';
 import { Toast, ToastContainer } from '../Toast';
 
-interface NoteHeaderControlProps {
+interface NoteHeaderControlMobileProps {
   id: string;
   isArchived?: boolean;
   isEdit?: boolean;
 }
 
-const NoteHeaderControl = ({
+const NoteHeaderControlMobile = ({
   id,
   isArchived,
   isEdit,
-}: NoteHeaderControlProps) => {
+}: NoteHeaderControlMobileProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isDeleteNoteModalOpen, setIsDeleteNoteModalOpen] = useState(false);
@@ -35,6 +36,14 @@ const NoteHeaderControl = ({
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
   const router = useRouter();
+
+  const handleGoBack = () => {
+    if (window.history.length > 2) {
+      router.back();
+    } else {
+      router.push(isArchived ? '/archive' : '/');
+    }
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -79,73 +88,70 @@ const NoteHeaderControl = ({
   const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
     <>
-      <div className="hidden w-[258px] min-w-[258px] flex-col gap-3 border-l border-solid border-neutral-200 py-5 pb-3 pl-4 transition-colors duration-300 dark:border-neutral-800 md:pb-4 lg:flex">
-        {isArchived ? (
-          <button
-            className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 dark:border-neutral-600"
-            onClick={() => setIsRestoreNoteModalOpen(true)}
-          >
-            <IconRestore
-              lightColor="#0E121B"
-              darkColor="#FFFFFF"
-              width={20}
-              height={20}
-              theme={currentTheme}
-            />
-            <span className="text-sm font-bold leading-[1.2] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:text-neutral-0">
-              Restore Note
-            </span>
-          </button>
-        ) : (
-          <button
-            className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 dark:border-neutral-600"
-            onClick={() => setIsArchiveNoteModalOpen(true)}
-          >
-            <IconArchive
-              lightColor="#0E121B"
-              darkColor="#FFFFFF"
-              width={20}
-              height={20}
-              theme={currentTheme}
-            />
-            <span className="text-sm font-bold leading-[1.2] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:text-neutral-0">
-              Archive Note
-            </span>
-          </button>
-        )}
-
+      <div className="flex w-full items-center justify-between border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800 md:pb-4 lg:hidden">
         <button
-          className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 dark:border-neutral-600"
-          onClick={() => setIsDeleteNoteModalOpen(true)}
+          className="flex w-max items-center gap-1"
+          onClick={handleGoBack}
         >
-          <IconDelete
-            lightColor="#0E121B"
-            darkColor="#FFFFFF"
-            width={20}
-            height={20}
-            theme={currentTheme}
-          />
-          <span className="text-sm font-bold leading-[1.2] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:text-neutral-0">
-            Delete Note
+          <span>
+            <IconArrowLeft
+              darkColor="#CACFD8"
+              width={18}
+              height={18}
+              theme={currentTheme}
+            />
+          </span>
+
+          <span className="text-sm leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-neutral-300">
+            Go Back
           </span>
         </button>
-
-        {isEdit ? (
-          <button
-            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
-            onClick={handleSave}
-            disabled={!isEdited}
-          >
-            {saving ? 'Saving...' : 'Save Note'}
+        <div className="flex items-center gap-4">
+          <button onClick={() => setIsDeleteNoteModalOpen(true)}>
+            <IconDelete
+              darkColor="#CACFD8"
+              width={18}
+              height={18}
+              theme={currentTheme}
+            />
           </button>
-        ) : (
-          <Link
-            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
-            href={isArchived ? `/archive/edit/${id}` : `/notes/edit/${id}`}
-          >
-            Edit Note
-          </Link>
-        )}
+          {isArchived ? (
+            <button onClick={() => setIsRestoreNoteModalOpen(true)}>
+              <IconRestore
+                darkColor="#CACFD8"
+                width={18}
+                height={18}
+                theme={currentTheme}
+              />
+            </button>
+          ) : (
+            <button onClick={() => setIsArchiveNoteModalOpen(true)}>
+              <IconArchive
+                darkColor="#CACFD8"
+                width={18}
+                height={18}
+                theme={currentTheme}
+              />
+            </button>
+          )}
+
+          {isEdit ? (
+            <button
+              className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500 transition-colors duration-300 disabled:text-blue-500/70"
+              onClick={handleSave}
+              disabled={!isEdited}
+            >
+              {saving ? 'Saving...' : 'Save Note'}
+            </button>
+          ) : (
+            <Link
+              className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500"
+              href={isArchived ? `/archive/edit/${id}` : `/notes/edit/${id}`}
+            >
+              Edit Note
+            </Link>
+          )}
+        </div>
       </div>
 
       {isDeleteNoteModalOpen && (
@@ -206,4 +212,4 @@ const NoteHeaderControl = ({
   );
 };
 
-export default NoteHeaderControl;
+export default NoteHeaderControlMobile;
