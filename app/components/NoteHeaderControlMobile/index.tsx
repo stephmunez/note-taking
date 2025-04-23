@@ -13,17 +13,17 @@ import IconRestore from '../IconRestore';
 import RestoreNoteModal from '../RestoreNoteModal';
 import { Toast, ToastContainer } from '../Toast';
 
-interface NoteHeaderControlProps {
+interface NoteHeaderControlMobileProps {
   id: string;
   isArchived?: boolean;
   isEdit?: boolean;
 }
 
-const NoteHeaderControl = ({
+const NoteHeaderControlMobile = ({
   id,
   isArchived,
   isEdit,
-}: NoteHeaderControlProps) => {
+}: NoteHeaderControlMobileProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isDeleteNoteModalOpen, setIsDeleteNoteModalOpen] = useState(false);
@@ -212,4 +212,4 @@ const NoteHeaderControl = ({
   );
 };
 
-export default NoteHeaderControl;
+export default NoteHeaderControlMobile;

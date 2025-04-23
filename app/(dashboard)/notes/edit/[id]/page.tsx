@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import EditNote from '../../../../components/EditNote';
-import NoteHeaderControl from '../../../../components/NoteHeaderControl';
+import NoteHeaderControl from '../../../../components/NoteHeaderControlMobile';
 
 interface generateMetadataProps {
   params: Promise<{ id: string }>;
