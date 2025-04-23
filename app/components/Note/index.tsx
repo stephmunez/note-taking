@@ -13,7 +13,7 @@ const Note = async ({ id }: NoteProps) => {
   }
 
   return (
-    <div className="flex w-full flex-col lg:py-5">
+    <div className="flex w-full flex-col gap-4 lg:py-5">
       <NoteHead
         title={note.title}
         tags={note.tags}
