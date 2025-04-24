@@ -79,7 +79,7 @@ const NoteHeaderControl = ({
   const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
     <>
-      <div className="hidden w-[258px] min-w-[258px] flex-col gap-3 border-l border-solid border-neutral-200 py-5 pb-3 pl-4 transition-colors duration-300 dark:border-neutral-800 md:pb-4 lg:flex">
+      <div className="hidden w-1/3 min-w-48 max-w-[258px] flex-col gap-3 border-l border-solid border-neutral-200 py-5 pb-3 pl-4 transition-colors duration-300 dark:border-neutral-800 md:pb-4 lg:flex">
         {isArchived ? (
           <button
             className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 dark:border-neutral-600"
