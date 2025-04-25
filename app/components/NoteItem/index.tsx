@@ -26,7 +26,10 @@ const NoteItem = ({ note }: NoteItemProps) => {
     year: 'numeric',
   });
 
-  const isActive = pathname === `/notes/${id}` || pathname === `/archive/${id}`;
+  const isActive =
+    pathname === `/notes/${id}` ||
+    pathname === `/archive/${id}` ||
+    pathname === `/notes/edit/${id}`;
 
   return (
     <li>

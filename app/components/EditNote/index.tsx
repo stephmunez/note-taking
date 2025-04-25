@@ -251,12 +251,10 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
     return <p className="text-sm text-red-500">Note not found</p>;
   }
 
-  const isValid = title.trim() && content.trim();
-
   return (
     <>
       <form
-        className="flex h-full w-full flex-col gap-3 md:gap-4"
+        className="flex h-full w-full flex-col gap-3 md:gap-4 lg:py-5"
         id="create-note"
       >
         <textarea

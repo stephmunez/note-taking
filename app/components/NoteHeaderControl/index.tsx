@@ -36,6 +36,14 @@ const NoteHeaderControl = ({
 
   const router = useRouter();
 
+  const handleGoBack = () => {
+    if (window.history.length > 2) {
+      router.back();
+    } else {
+      router.push(isArchived ? '/archive' : '/');
+    }
+  };
+
   const handleSave = async () => {
     setSaving(true);
     window.dispatchEvent(new CustomEvent('save-note'));
@@ -132,7 +140,7 @@ const NoteHeaderControl = ({
 
         {isEdit ? (
           <button
-            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
+            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 disabled:bg-blue-500/70"
             onClick={handleSave}
             disabled={!isEdited}
           >
@@ -145,6 +153,17 @@ const NoteHeaderControl = ({
           >
             Edit Note
           </Link>
+        )}
+
+        {isEdit && (
+          <button
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 dark:border-neutral-600"
+            onClick={handleGoBack}
+          >
+            <span className="text-sm font-bold leading-[1.2] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:text-neutral-0">
+              Cancel
+            </span>
+          </button>
         )}
       </div>
 
