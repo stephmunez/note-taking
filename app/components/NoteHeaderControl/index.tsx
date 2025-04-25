@@ -132,7 +132,7 @@ const NoteHeaderControl = ({
 
         {isEdit ? (
           <button
-            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
+            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 disabled:bg-blue-500/70"
             onClick={handleSave}
             disabled={!isEdited}
           >
