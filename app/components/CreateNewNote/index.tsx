@@ -30,7 +30,7 @@ const CreateNewNote = () => {
 
   const handleCreateNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Validate required fields
     if (!title.trim()) {
       setToastMessage('Title cannot be empty');
@@ -113,9 +113,9 @@ const CreateNewNote = () => {
 
   return (
     <>
-      <div className="flex w-full items-center justify-between border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800">
+      <div className="flex w-full items-center justify-between border-b border-solid border-neutral-200 pb-3 transition-colors duration-300 dark:border-neutral-800 md:pb-4 lg:w-1/3 lg:min-w-48 lg:max-w-[258px] lg:flex-col lg:gap-3 lg:border-b-0 lg:border-l lg:py-5 lg:pl-4">
         <button
-          className="flex w-max items-center gap-1"
+          className="flex w-max items-center gap-1 lg:hidden"
           onClick={handleGoBack}
         >
           <span>
@@ -131,15 +131,15 @@ const CreateNewNote = () => {
             Go Back
           </span>
         </button>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 lg:w-full lg:flex-col-reverse">
           <button
             onClick={handleGoBack}
-            className="text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-neutral-300"
+            className="text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-600 transition-colors duration-300 dark:text-neutral-300 lg:flex lg:w-full lg:items-center lg:justify-center lg:gap-2 lg:rounded-lg lg:border lg:border-neutral-300 lg:px-4 lg:py-3 lg:dark:border-neutral-600"
           >
             Cancel
           </button>
           <button
-            className="text-sm font-normal leading-[1.3] tracking-[-0.2px] transition-colors duration-300 text-blue-500 disabled:text-blue-500/70 disabled:cursor-not-allowed"
+            className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-blue-500 transition-colors duration-300 disabled:cursor-not-allowed disabled:text-blue-500/70 lg:w-full lg:bg-blue-500 lg:font-semibold lg:leading-[1.2] lg:tracking-[-0.3px] lg:text-neutral-0 lg:disabled:bg-blue-500/70 lg:disabled:text-neutral-0"
             type="submit"
             form="create-note"
             disabled={isSaving || !title.trim() || !content.trim()}
@@ -150,7 +150,7 @@ const CreateNewNote = () => {
       </div>
 
       <form
-        className="flex w-full flex-col gap-3"
+        className="flex w-full flex-col gap-3 lg:py-5"
         id="create-note"
         onSubmit={handleCreateNote}
       >
