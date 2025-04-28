@@ -1,7 +1,8 @@
+import DesktopRedirect from '@/app/components/DesktopRedirect';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import CreateNewNoteButton from '../../components/CreateNewNoteButton';
-import NotesList from '../../components/NotesList';
+import NotesListMobile from '../../components/NotesListMobile';
 
 export const metadata: Metadata = {
   title: 'Notes Taking | Archive',
@@ -25,7 +26,8 @@ export default async function Home() {
             </p>
           }
         >
-          <NotesList isArchived={true} />
+          <DesktopRedirect isArchived={true} />
+          <NotesListMobile isArchived={true} />
         </Suspense>
       </div>
 

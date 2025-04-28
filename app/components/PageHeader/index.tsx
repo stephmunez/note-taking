@@ -2,6 +2,7 @@
 import { getClientNotes, Note } from '@/lib/clientNotes';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import IconSearch from '../IconSearch';
 import IconSettings from '../IconSettings';
@@ -12,6 +13,7 @@ const PageHeader = () => {
   const [loading, setLoading] = useState(true);
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
@@ -38,12 +40,16 @@ const PageHeader = () => {
       ),
   );
 
+  const headingTitle = pathname.startsWith('/archive')
+    ? 'Archived Notes'
+    : 'All Notes';
+
   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
     <header className="hidden w-full items-center justify-between border-b border-solid border-neutral-200 bg-neutral-0 px-8 py-6 transition-colors duration-300 dark:border-neutral-800 dark:bg-neutral-950 lg:flex">
       <h1 className="text-2xl font-bold leading-[1.2] tracking-[-0.5px]">
-        All Notes
+        {headingTitle}
       </h1>
       <div className="flex items-center gap-4">
         <div className="relative w-[300px]">

@@ -29,7 +29,8 @@ const NoteItem = ({ note }: NoteItemProps) => {
   const isActive =
     pathname === `/notes/${id}` ||
     pathname === `/archive/${id}` ||
-    pathname === `/notes/edit/${id}`;
+    pathname === `/notes/edit/${id}` ||
+    pathname === `/archive/edit/${id}`;
 
   return (
     <li>
