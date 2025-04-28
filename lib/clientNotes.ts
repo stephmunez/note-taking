@@ -11,7 +11,7 @@ export interface Note {
   user_id: string;
 }
 
-export async function getClientNotes(): Promise<Note[]> {
+export async function getClientNotes(isArchived?: boolean): Promise<Note[]> {
   try {
     const supabase = createClient();
 
@@ -31,13 +31,22 @@ export async function getClientNotes(): Promise<Note[]> {
       return [];
     }
 
-    // Fetch notes for the authenticated user
-    const { data, error } = await supabase
+    let query = supabase
       .from('notes')
       .select('*')
       .eq('user_id', user.id)
-      .eq('isArchived', false)
       .order('lastEdited', { ascending: false });
+
+    if (isArchived !== undefined) {
+      query = query.eq('isArchived', isArchived);
+    } else {
+      // Default behavior: show non-archived notes
+      query = query.eq('isArchived', false);
+    }
+
+    // Fetch notes for the authenticated user
+
+    const { data, error } = await query;
 
     if (error) {
       console.error(`Database error: ${error.message}`);
