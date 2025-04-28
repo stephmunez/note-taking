@@ -12,7 +12,7 @@ const NotesListMobile = async ({ tag, isArchived }: NotesListMobileProps) => {
   const notes = await getNotes(tag, isArchived);
 
   return (
-    <>
+    <div className="flex w-full flex-col gap-4 lg:hidden">
       {notes && notes.length ? (
         <ul className="flex flex-col gap-1 lg:hidden">
           {notes.map((note, i) => (
@@ -50,7 +50,7 @@ const NotesListMobile = async ({ tag, isArchived }: NotesListMobileProps) => {
           )}
         </p>
       )}
-    </>
+    </div>
   );
 };
 
