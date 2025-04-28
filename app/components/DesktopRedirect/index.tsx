@@ -3,6 +3,10 @@ import { getClientNotes } from '@/lib/clientNotes';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+interface DesktopRedirectProps {
+  isArchived?: boolean;
+}
+
 interface Note {
   id: string;
   title: string;
@@ -12,7 +16,7 @@ interface Note {
   isArchived: boolean;
 }
 
-const DesktopRedirect = () => {
+const DesktopRedirect = ({ isArchived }: DesktopRedirectProps) => {
   const router = useRouter();
   const [notes, setNotes] = useState<Note[]>([]);
   const [windowWidth, setWindowWidth] = useState(
@@ -21,11 +25,11 @@ const DesktopRedirect = () => {
 
   useEffect(() => {
     const fetchNotes = async () => {
-      const fetchedNotes = await getClientNotes();
+      const fetchedNotes = await getClientNotes(isArchived);
       setNotes(fetchedNotes);
     };
     fetchNotes();
-  }, []);
+  }, [isArchived]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,9 +47,12 @@ const DesktopRedirect = () => {
     const isDesktop = windowWidth >= 1024;
     if (isDesktop && notes && notes.length > 0) {
       const latestNoteId = notes[0].id;
-      router.push(`/notes/${latestNoteId}`);
+      const redirectPath = isArchived
+        ? `/archive/${latestNoteId}`
+        : `/notes/${latestNoteId}`;
+      router.push(redirectPath);
     }
-  }, [notes, router, windowWidth]);
+  }, [notes, router, windowWidth, isArchived]);
 
   return null;
 };
