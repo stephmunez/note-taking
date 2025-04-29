@@ -42,7 +42,11 @@ const PageHeader = () => {
 
   const headingTitle = pathname.startsWith('/archive')
     ? 'Archived Notes'
-    : 'All Notes';
+    : pathname.startsWith('/tags/')
+      ? pathname.split('/')[2]
+        ? `Notes Tagged: ${pathname.split('/')[2].charAt(0).toUpperCase() + pathname.split('/')[2].slice(1)}`
+        : 'Tags'
+      : 'All Notes';
 
   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme;

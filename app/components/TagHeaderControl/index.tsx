@@ -28,7 +28,7 @@ const NoteHeaderControl = () => {
 
   const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
-    <div className="flex w-full items-center justify-between pb-3">
+    <div className="flex w-full items-center justify-between pb-3 lg:hidden">
       <button className="flex w-max items-center gap-1" onClick={handleGoBack}>
         <span>
           <IconArrowLeft
