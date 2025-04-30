@@ -26,7 +26,7 @@ const TagItem = ({ tag }: TagItemProps) => {
   }
 
   const currentTheme = theme === 'system' ? systemTheme : theme;
-  const isActive = pathname === `/tags/${tag.toLowerCase()}`;
+  const isActive = pathname.startsWith(`/tags/${tag.toLowerCase()}`);
   return (
     <Link
       href={`/tags/${tag.toLowerCase()}`}
