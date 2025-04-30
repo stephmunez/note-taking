@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import CreateNewNoteButton from '../../../components/CreateNewNoteButton';
-import NotesList from '../../../components/NotesList';
+import DesktopRedirect from '../../../components/DesktopRedirect';
+import NotesListMobile from '../../../components/NotesListMobile';
 import TagHeaderControl from '../../../components/TagHeaderControl';
 
 interface TagProps {
@@ -39,7 +40,8 @@ export default async function Tag({ params }: TagProps) {
           </p>
         }
       >
-        <NotesList tag={tag} />
+        <DesktopRedirect tag={tag} />
+        <NotesListMobile tag={tag} />
       </Suspense>
 
       <CreateNewNoteButton />

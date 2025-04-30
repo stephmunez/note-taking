@@ -19,11 +19,17 @@ const NotesList = async ({ tag, isArchived }: NotesListProps) => {
       >
         + Create New Note
       </Link>
+      {tag && (
+        <p className="text-sm leading-[1.3] tracking-[-0.2px] text-neutral-700 transition-colors duration-300 dark:text-neutral-200">
+          All notes with the ”{tag.charAt(0).toUpperCase() + tag.slice(1)}” tag
+          are shown here.
+        </p>
+      )}
       {notes && notes.length ? (
         <ul className="flex flex-col gap-1">
           {notes.map((note, i) => (
             <React.Fragment key={note.id}>
-              <NoteItem note={note} />
+              <NoteItem note={note} tag={tag} />
               <div
                 key={i}
                 className={`pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800 ${

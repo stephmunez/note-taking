@@ -11,7 +11,10 @@ export interface Note {
   user_id: string;
 }
 
-export async function getClientNotes(isArchived?: boolean): Promise<Note[]> {
+export async function getClientNotes(
+  isArchived?: boolean,
+  tag?: string,
+): Promise<Note[]> {
   try {
     const supabase = createClient();
 
@@ -42,6 +45,12 @@ export async function getClientNotes(isArchived?: boolean): Promise<Note[]> {
     } else {
       // Default behavior: show non-archived notes
       query = query.eq('isArchived', false);
+    }
+
+    if (tag) {
+      query = query.contains('tags', [
+        tag.charAt(0).toUpperCase() + tag.slice(1),
+      ]);
     }
 
     // Fetch notes for the authenticated user
