@@ -14,9 +14,10 @@ interface Note {
 
 interface NoteItemProps {
   note: Note;
+  tag?: string;
 }
 
-const NoteItem = ({ note }: NoteItemProps) => {
+const NoteItem = ({ note, tag }: NoteItemProps) => {
   const { title, tags, lastEdited, id, isArchived } = note;
   const pathname = usePathname();
 
@@ -30,13 +31,20 @@ const NoteItem = ({ note }: NoteItemProps) => {
     pathname === `/notes/${id}` ||
     pathname === `/archive/${id}` ||
     pathname === `/notes/edit/${id}` ||
-    pathname === `/archive/edit/${id}`;
+    pathname === `/archive/edit/${id}` ||
+    pathname === `/tags/${tag?.toLowerCase()}/${id}`;
 
   return (
     <li>
       <Link
         className={`flex flex-col gap-3 rounded-md p-2 transition-colors duration-300 ${isActive ? 'bg-neutral-100 dark:bg-neutral-800' : 'bg-neutral-0 dark:bg-neutral-950'}`}
-        href={isArchived ? `/archive/${id}` : `/notes/${id}`}
+        href={
+          isArchived
+            ? `/archive/${id}`
+            : tag
+              ? `/tags/${tag}/${id}`
+              : `/notes/${id}`
+        }
       >
         <h2 className="text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-950 transition-colors duration-300 dark:text-white">
           {title}

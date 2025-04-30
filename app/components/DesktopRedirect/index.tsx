@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 interface DesktopRedirectProps {
   isArchived?: boolean;
+  tag?: string;
 }
 
 interface Note {
@@ -16,7 +17,7 @@ interface Note {
   isArchived: boolean;
 }
 
-const DesktopRedirect = ({ isArchived }: DesktopRedirectProps) => {
+const DesktopRedirect = ({ isArchived, tag }: DesktopRedirectProps) => {
   const router = useRouter();
   const [notes, setNotes] = useState<Note[]>([]);
   const [windowWidth, setWindowWidth] = useState(
@@ -25,11 +26,11 @@ const DesktopRedirect = ({ isArchived }: DesktopRedirectProps) => {
 
   useEffect(() => {
     const fetchNotes = async () => {
-      const fetchedNotes = await getClientNotes(isArchived);
+      const fetchedNotes = await getClientNotes(isArchived, tag);
       setNotes(fetchedNotes);
     };
     fetchNotes();
-  }, [isArchived]);
+  }, [isArchived, tag]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,10 +50,12 @@ const DesktopRedirect = ({ isArchived }: DesktopRedirectProps) => {
       const latestNoteId = notes[0].id;
       const redirectPath = isArchived
         ? `/archive/${latestNoteId}`
-        : `/notes/${latestNoteId}`;
+        : tag
+          ? `/tags/${tag}/${latestNoteId}`
+          : `/notes/${latestNoteId}`;
       router.push(redirectPath);
     }
-  }, [notes, router, windowWidth, isArchived]);
+  }, [notes, router, windowWidth, isArchived, tag]);
 
   return null;
 };
