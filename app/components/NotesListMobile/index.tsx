@@ -17,7 +17,7 @@ const NotesListMobile = async ({ tag, isArchived }: NotesListMobileProps) => {
         <ul className="flex flex-col gap-1 lg:hidden">
           {notes.map((note, i) => (
             <React.Fragment key={note.id}>
-              <NoteItem note={note} />
+              <NoteItem note={note} tag={tag} />
               <div
                 key={i}
                 className={`pointer-events-none h-px w-full bg-neutral-200 transition-colors duration-300 dark:bg-neutral-800 ${
