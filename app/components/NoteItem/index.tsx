@@ -32,7 +32,8 @@ const NoteItem = ({ note, tag }: NoteItemProps) => {
     pathname === `/archive/${id}` ||
     pathname === `/notes/edit/${id}` ||
     pathname === `/archive/edit/${id}` ||
-    pathname === `/tags/${tag?.toLowerCase()}/${id}`;
+    pathname === `/tags/${tag?.toLowerCase()}/${id}` ||
+    pathname === `/tags/${tag?.toLowerCase()}/edit/${id}`;
 
   return (
     <li>
