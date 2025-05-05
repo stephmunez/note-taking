@@ -5,11 +5,11 @@ import { Suspense } from 'react';
 import NoteHeaderControlMobile from '../../../../components/NoteHeaderControlMobile';
 
 interface generateMetadataProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; tag: string }>;
 }
 
 interface TagNotePageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; tag: string }>;
 }
 
 export const generateMetadata = async ({ params }: generateMetadataProps) => {
@@ -29,12 +29,12 @@ export const generateMetadata = async ({ params }: generateMetadataProps) => {
 };
 
 const TagNotePage = async ({ params }: TagNotePageProps) => {
-  const { id } = await params;
+  const { id, tag } = await params;
 
   return (
     <main className="flex min-h-[calc(100vh-108px)] w-full flex-col gap-3 rounded-t-lg bg-neutral-0 px-4 py-5 dark:bg-neutral-950 md:min-h-[calc(100vh-148px)] md:gap-4 md:px-6 lg:max-h-[calc(100vh-102px)] lg:min-h-[calc(100vh-102px)] lg:flex-row-reverse lg:rounded-none lg:py-0">
-      <NoteHeaderControlMobile id={id} />
-      <NoteHeaderControl id={id} />
+      <NoteHeaderControlMobile id={id} tag={tag} />
+      <NoteHeaderControl id={id} tag={tag} />
 
       <Suspense
         fallback={

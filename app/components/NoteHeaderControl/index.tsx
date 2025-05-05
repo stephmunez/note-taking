@@ -16,12 +16,14 @@ interface NoteHeaderControlProps {
   id: string;
   isArchived?: boolean;
   isEdit?: boolean;
+  tag?: string;
 }
 
 const NoteHeaderControl = ({
   id,
   isArchived,
   isEdit,
+  tag,
 }: NoteHeaderControlProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -149,7 +151,13 @@ const NoteHeaderControl = ({
         ) : (
           <Link
             className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
-            href={isArchived ? `/archive/edit/${id}` : `/notes/edit/${id}`}
+            href={
+              isArchived
+                ? `/archive/edit/${id}`
+                : tag
+                  ? `/tags/${tag}/edit/${id}`
+                  : `/notes/edit/${id}`
+            }
           >
             Edit Note
           </Link>

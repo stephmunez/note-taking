@@ -17,12 +17,14 @@ interface NoteHeaderControlMobileProps {
   id: string;
   isArchived?: boolean;
   isEdit?: boolean;
+  tag?: boolean;
 }
 
 const NoteHeaderControlMobile = ({
   id,
   isArchived,
   isEdit,
+  tag,
 }: NoteHeaderControlMobileProps) => {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -146,7 +148,13 @@ const NoteHeaderControlMobile = ({
           ) : (
             <Link
               className="text-sm leading-[1.3] tracking-[-0.2px] text-blue-500"
-              href={isArchived ? `/archive/edit/${id}` : `/notes/edit/${id}`}
+              href={
+                isArchived
+                  ? `/archive/edit/${id}`
+                  : tag
+                    ? `/tags/${tag}/edit/${id}`
+                    : `/notes/edit/${id}`
+              }
             >
               Edit Note
             </Link>
