@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import IconArchive from '../IconArchive';
 import IconChevronRight from '../IconChevronRight';
 import IconHome from '../IconHome';
+import IconSearch from '../IconSearch';
 import Logo from '../Logo';
 import NavigationTags from '../NavigationTags';
 
@@ -89,6 +90,18 @@ const NavigationSidebar = () => {
         />
       ),
       label: 'All Notes',
+    },
+    {
+      href: '/search',
+      icon: (
+        <IconSearch
+          theme={currentTheme}
+          isActive={isActive('/search')}
+          lightColor="#2B303B"
+          darkColor="#E0E4EA"
+        />
+      ),
+      label: 'Search',
     },
     {
       href: '/archive',
