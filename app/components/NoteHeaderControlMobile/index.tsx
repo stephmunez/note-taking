@@ -17,7 +17,7 @@ interface NoteHeaderControlMobileProps {
   id: string;
   isArchived?: boolean;
   isEdit?: boolean;
-  tag?: boolean;
+  tag?: string;
 }
 
 const NoteHeaderControlMobile = ({
