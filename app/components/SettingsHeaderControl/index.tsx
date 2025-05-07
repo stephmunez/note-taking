@@ -20,7 +20,10 @@ const SettingsHeaderControl = () => {
 
   const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
-    <Link href={'/settings'} className="flex w-full items-center gap-2">
+    <Link
+      href={'/settings'}
+      className="flex w-full items-center gap-2 lg:hidden"
+    >
       <IconArrowLeft
         theme={currentTheme}
         width={20}

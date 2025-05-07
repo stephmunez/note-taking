@@ -20,7 +20,9 @@ const PageHeader = () => {
       ? pathname.split('/')[2]
         ? `Notes Tagged: ${pathname.split('/')[2].charAt(0).toUpperCase() + pathname.split('/')[2].slice(1)}`
         : 'Tags'
-      : 'All Notes';
+      : pathname.startsWith('/settings')
+        ? 'Settings'
+        : 'All Notes';
 
   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme;
@@ -33,7 +35,7 @@ const PageHeader = () => {
       </h1>
 
       <Link
-        className="flex h-10 w-10 items-center justify-center"
+        className={`flex h-10 w-10 items-center justify-center ${pathname.startsWith('/settings') ? 'lg:hidden' : ''}`}
         href="/settings"
       >
         <IconSettings
