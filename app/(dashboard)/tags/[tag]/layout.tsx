@@ -3,7 +3,7 @@ import NotesList from '../../../components/NotesList';
 
 interface TagLayoutProps {
   children: React.ReactNode;
-  params: { tag: string };
+  params: Promise<{ tag: string }>;
 }
 
 const TagLayout = async ({ children, params }: TagLayoutProps) => {
