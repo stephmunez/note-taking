@@ -32,7 +32,7 @@ const GoogleSignup = () => {
         Or sign up with:
       </span>
       <button
-        className="flex w-full items-center justify-center gap-4 rounded-lg border border-solid border-neutral-300 px-4 py-3 text-base font-medium leading-[1] tracking-[0.5px] text-neutral-950 transition-colors duration-300 dark:border-neutral-600 dark:text-neutral-0"
+        className="flex w-full items-center justify-center gap-4 rounded-lg border border-solid border-neutral-300 px-4 py-3 text-base font-medium leading-[1] tracking-[0.5px] text-neutral-950 transition-colors duration-300 hover:bg-neutral-50 dark:border-neutral-600 dark:text-neutral-0 dark:hover:bg-neutral-800"
         type="button"
         onClick={handleGoogleSignUp}
       >

@@ -50,7 +50,7 @@ const LoginForm = ({ login }: LoginFormProps) => {
             id="email"
             name="email"
             type="email"
-            className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
+            className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 hover:bg-neutral-50 focus:border-neutral-950 focus:bg-neutral-0 focus:outline-none focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 dark:border-neutral-600 dark:text-neutral-0 dark:hover:bg-neutral-800 dark:focus:bg-neutral-950 dark:focus:outline-neutral-600"
             placeholder="email@example.com"
           />
         </div>
@@ -65,7 +65,7 @@ const LoginForm = ({ login }: LoginFormProps) => {
           </label>
           <Link
             href={'/forgot-password'}
-            className="text-xs leading-[1.4] tracking-normal text-neutral-600 underline dark:text-neutral-400"
+            className="text-xs leading-[1.4] tracking-normal text-neutral-600 underline transition-colors duration-300 hover:text-blue-500 active:text-blue-500 dark:text-neutral-400 dark:hover:text-blue-500 dark:active:text-blue-500"
           >
             Forgot Password?
           </Link>
@@ -76,7 +76,7 @@ const LoginForm = ({ login }: LoginFormProps) => {
             type={showPassword ? 'text' : 'password'}
             id="password"
             name="password"
-            className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
+            className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 hover:bg-neutral-50 focus:border-neutral-950 focus:bg-neutral-0 focus:outline-none focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 dark:border-neutral-600 dark:text-neutral-0 dark:hover:bg-neutral-800 dark:focus:bg-neutral-950 dark:focus:outline-neutral-600"
           />
           <button
             onClick={() => setShowPassword(!showPassword)}
@@ -104,7 +104,7 @@ const LoginForm = ({ login }: LoginFormProps) => {
         </div>
       </div>
       <button
-        className="rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
+        className="rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 hover:bg-blue-700 focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 active:bg-blue-700 dark:focus:outline-neutral-600"
         type="submit"
       >
         Login

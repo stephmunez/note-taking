@@ -52,7 +52,7 @@ const SignupForm = ({ signup }: SignupFormProps) => {
             type="email"
             id="email"
             name="email"
-            className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
+            className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 hover:bg-neutral-50 focus:border-neutral-950 focus:bg-neutral-0 focus:outline-none focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 dark:border-neutral-600 dark:text-neutral-0 dark:hover:bg-neutral-800 dark:focus:bg-neutral-950 dark:focus:outline-neutral-600"
             placeholder="email@example.com"
           />
         </div>
@@ -70,7 +70,7 @@ const SignupForm = ({ signup }: SignupFormProps) => {
             type={showPassword ? 'text' : 'password'}
             id="password"
             name="password"
-            className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:border-neutral-600 dark:text-neutral-0"
+            className="w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 hover:bg-neutral-50 focus:border-neutral-950 focus:bg-neutral-0 focus:outline-none focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 dark:border-neutral-600 dark:text-neutral-0 dark:hover:bg-neutral-800 dark:focus:bg-neutral-950 dark:focus:outline-neutral-600"
           />
           <button
             onClick={() => setShowPassword(!showPassword)}
@@ -105,7 +105,7 @@ const SignupForm = ({ signup }: SignupFormProps) => {
         </div>
       </div>
       <button
-        className="rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
+        className="rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 hover:bg-blue-700 focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 active:bg-blue-700 dark:focus:outline-neutral-600"
         type="submit"
       >
         Sign Up
