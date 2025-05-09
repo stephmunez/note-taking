@@ -29,7 +29,7 @@ const Login = () => {
           No account yet?{' '}
           <Link
             href={'/signup'}
-            className="text-neutral-950 transition-colors duration-300 dark:text-neutral-0"
+            className="text-neutral-950 transition-colors duration-300 hover:text-blue-500 active:text-blue-500 dark:text-neutral-0 dark:hover:text-blue-500 dark:active:text-blue-500"
           >
             Sign Up
           </Link>
