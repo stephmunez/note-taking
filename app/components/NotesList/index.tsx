@@ -14,7 +14,7 @@ const NotesList = async ({ tag, isArchived }: NotesListProps) => {
   return (
     <div className="hidden max-h-[calc(100vh-89px)] min-h-[calc(100vh-89px)] w-1/3 min-w-52 max-w-[290px] flex-col gap-4 overflow-auto border-r border-solid bg-neutral-0 pb-9 pl-8 pr-5 pt-5 dark:border-r-neutral-800 dark:bg-neutral-950 lg:flex">
       <Link
-        className="hidden items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 lg:flex"
+        className="hidden items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-base font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 hover:bg-blue-700 active:bg-blue-700 lg:flex"
         href={'/create'}
       >
         + Create New Note

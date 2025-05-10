@@ -38,7 +38,7 @@ const NoteItem = ({ note, tag }: NoteItemProps) => {
   return (
     <li>
       <Link
-        className={`flex flex-col gap-3 rounded-md p-2 transition-colors duration-300 ${isActive ? 'bg-neutral-100 dark:bg-neutral-800' : 'bg-neutral-0 dark:bg-neutral-950'}`}
+        className={`flex flex-col gap-3 rounded-md p-2 transition-colors duration-300 hover:bg-neutral-100 active:bg-neutral-100 hover:dark:bg-neutral-800 active:dark:bg-neutral-800 ${isActive ? 'bg-neutral-100 dark:bg-neutral-800' : 'bg-neutral-0 dark:bg-neutral-950'}`}
         href={
           isArchived
             ? `/archive/${id}`
