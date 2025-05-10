@@ -112,7 +112,7 @@ const ColorThemeOptions = () => {
           )}
         </ul>
         <button
-          className="self-end rounded-lg bg-blue-500 px-4 py-3 text-sm font-medium leading-[1.2] tracking-[-0.2px] text-neutral-0 transition-colors duration-300"
+          className="self-end rounded-lg bg-blue-500 px-4 py-3 text-sm font-medium leading-[1.2] tracking-[-0.2px] text-neutral-0 transition-colors duration-300 hover:bg-blue-700 active:bg-blue-700"
           onClick={applyChanges}
         >
           Apply Changes

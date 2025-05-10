@@ -241,7 +241,7 @@ const ChangePasswordForm = () => {
                   name="old-password"
                   value={oldPassword}
                   required
-                  className={`w-full rounded-lg border border-solid bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:text-neutral-0 ${getInputErrorClass('oldPassword')}`}
+                  className={`w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 hover:bg-neutral-50 focus:border-neutral-950 focus:bg-neutral-0 focus:outline-none focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 dark:border-neutral-600 dark:text-neutral-0 dark:hover:bg-neutral-800 dark:focus:bg-neutral-950 dark:focus:outline-neutral-600 ${getInputErrorClass('oldPassword')} `}
                   onChange={(e) => setOldPassword(e.target.value)}
                 />
                 <button
@@ -297,7 +297,7 @@ const ChangePasswordForm = () => {
                   name="new-password"
                   value={newPassword}
                   required
-                  className={`w-full rounded-lg border border-solid bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:text-neutral-0 ${getInputErrorClass('newPassword')}`}
+                  className={`w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 hover:bg-neutral-50 focus:border-neutral-950 focus:bg-neutral-0 focus:outline-none focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 dark:border-neutral-600 dark:text-neutral-0 dark:hover:bg-neutral-800 dark:focus:bg-neutral-950 dark:focus:outline-neutral-600 ${getInputErrorClass('newPassword')}`}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
                 <button
@@ -366,7 +366,7 @@ const ChangePasswordForm = () => {
                   name="confirm-new-password"
                   value={confirmNewPassword}
                   required
-                  className={`w-full rounded-lg border border-solid bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 focus:outline-none dark:text-neutral-0 ${getInputErrorClass('confirmNewPassword')}`}
+                  className={`w-full rounded-lg border border-solid border-neutral-300 bg-transparent px-4 py-3 pr-11 text-sm font-normal leading-[1.3] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 placeholder:text-neutral-500 hover:bg-neutral-50 focus:border-neutral-950 focus:bg-neutral-0 focus:outline-none focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 dark:border-neutral-600 dark:text-neutral-0 dark:hover:bg-neutral-800 dark:focus:bg-neutral-950 dark:focus:outline-neutral-600 ${getInputErrorClass('confirmPassword')}`}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                 />
                 <button
@@ -412,7 +412,7 @@ const ChangePasswordForm = () => {
             </div>
           </form>
           <button
-            className={`self-end rounded-lg bg-blue-500 px-4 py-3 text-sm font-medium leading-[1.2] tracking-[-0.2px] text-neutral-0 transition-colors duration-300 ${
+            className={`self-end rounded-lg bg-blue-500 px-4 py-3 text-sm font-medium leading-[1.2] tracking-[-0.2px] text-neutral-0 transition-colors duration-300 hover:bg-blue-700 active:bg-blue-700 ${
               loading || verifyingPassword ? 'cursor-not-allowed' : ''
             }`}
             form="change-password"
