@@ -44,8 +44,8 @@ export default function SettingsList() {
             <li key={index}>
               <Link
                 href={href}
-                className={`flex items-center justify-between rounded-md p-2 transition-colors duration-300 ${
-                  active ? 'rounded-lg bg-neutral-100 dark:bg-neutral-800' : ''
+                className={`flex items-center justify-between rounded-md p-2 transition-colors duration-300 hover:bg-neutral-100 active:bg-neutral-100 dark:hover:bg-neutral-800 dark:active:bg-neutral-800 lg:rounded-lg ${
+                  active ? 'bg-neutral-100 dark:bg-neutral-800' : ''
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -79,7 +79,7 @@ export default function SettingsList() {
               lightColor="#0E121B"
               darkColor="#E0E4EA"
             />
-            <span className="text-sm leading-[1.2] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:text-neutral-200">
+            <span className="0 text-sm leading-[1.2] tracking-[-0.2px] text-neutral-950 transition-colors duration-300 dark:text-neutral-200">
               Logout
             </span>
           </button>
