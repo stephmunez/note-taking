@@ -27,8 +27,8 @@ const NavigationItem = ({
   theme,
 }: MenuItemProps) => (
   <Link
-    className={`flex w-full items-center gap-2 px-3 py-[0.625rem] ${
-      isActive ? 'rounded-lg bg-neutral-100 dark:bg-neutral-800' : ''
+    className={`flex w-full items-center gap-2 rounded-lg px-3 py-[0.625rem] hover:bg-neutral-100 active:bg-neutral-100 hover:dark:bg-neutral-800 active:dark:bg-neutral-800 ${
+      isActive ? 'bg-neutral-100 dark:bg-neutral-800' : ''
     }`}
     href={href}
     aria-current={isActive ? 'page' : undefined}
