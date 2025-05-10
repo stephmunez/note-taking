@@ -92,7 +92,7 @@ const NoteHeaderControl = ({
       <div className="hidden w-1/3 min-w-48 max-w-[258px] flex-col gap-3 border-l border-solid border-neutral-200 py-5 pb-3 pl-4 transition-colors duration-300 dark:border-neutral-800 md:pb-4 lg:flex">
         {isArchived ? (
           <button
-            className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 dark:border-neutral-600"
+            className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 hover:bg-neutral-50 active:bg-neutral-50 dark:border-neutral-600 dark:hover:bg-neutral-800 dark:active:bg-neutral-800"
             onClick={() => setIsRestoreNoteModalOpen(true)}
           >
             <IconRestore
@@ -108,7 +108,7 @@ const NoteHeaderControl = ({
           </button>
         ) : (
           <button
-            className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 dark:border-neutral-600"
+            className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 hover:bg-neutral-50 active:bg-neutral-50 dark:border-neutral-600 dark:hover:bg-neutral-800 dark:active:bg-neutral-800"
             onClick={() => setIsArchiveNoteModalOpen(true)}
           >
             <IconArchive
@@ -125,7 +125,7 @@ const NoteHeaderControl = ({
         )}
 
         <button
-          className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 dark:border-neutral-600"
+          className="flex w-full items-center gap-2 rounded-lg border border-neutral-300 px-4 py-3 transition-colors duration-300 hover:bg-neutral-50 active:bg-neutral-50 dark:border-neutral-600 dark:hover:bg-neutral-800 dark:active:bg-neutral-800"
           onClick={() => setIsDeleteNoteModalOpen(true)}
         >
           <IconDelete
@@ -142,7 +142,7 @@ const NoteHeaderControl = ({
 
         {isEdit ? (
           <button
-            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 disabled:bg-blue-500/70"
+            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 hover:bg-blue-700 active:bg-blue-700 disabled:bg-blue-500/70"
             onClick={handleSave}
             disabled={!isEdited}
           >
@@ -150,7 +150,7 @@ const NoteHeaderControl = ({
           </button>
         ) : (
           <Link
-            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300"
+            className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-3 text-sm font-semibold leading-[1.2] tracking-[-0.3px] text-neutral-0 transition-colors duration-300 hover:bg-blue-700 active:bg-blue-700"
             href={
               isArchived
                 ? `/archive/edit/${id}`
