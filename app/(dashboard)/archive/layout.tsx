@@ -10,7 +10,7 @@ const ArchivedNotesPageLayout = ({
     <div className="flex w-full bg-neutral-0 transition-colors duration-300 dark:bg-neutral-950">
       <Suspense
         fallback={
-          <p className="text-sm text-neutral-700 dark:text-neutral-300 lg:pl-8 lg:pt-5">
+          <p className="hidden text-sm text-neutral-700 dark:text-neutral-300 lg:pl-8 lg:pt-5">
             Loading notes...
           </p>
         }
