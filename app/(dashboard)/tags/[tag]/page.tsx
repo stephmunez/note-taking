@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import CreateNewNoteButton from '../../../components/CreateNewNoteButton';
 import DesktopRedirect from '../../../components/DesktopRedirect';
 import NotesListMobile from '../../../components/NotesListMobile';
+import NotesListMobileLoading from '../../../components/NotesListMobileLoading';
 import TagHeaderControl from '../../../components/TagHeaderControl';
 
 interface TagProps {
@@ -33,13 +34,7 @@ export default async function Tag({ params }: TagProps) {
         are shown here.
       </p>
 
-      <Suspense
-        fallback={
-          <p className="text-sm text-neutral-700 dark:text-neutral-300">
-            Loading {tag.charAt(0).toUpperCase() + tag.slice(1)} notes...
-          </p>
-        }
-      >
+      <Suspense fallback={<NotesListMobileLoading />}>
         <DesktopRedirect tag={tag} />
         <NotesListMobile tag={tag} />
       </Suspense>

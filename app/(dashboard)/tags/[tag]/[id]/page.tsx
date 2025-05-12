@@ -1,8 +1,9 @@
-import Note from '@/app/components/Note';
-import NoteHeaderControl from '@/app/components/NoteHeaderControl';
 import { createClient } from '@/utils/supabase/server';
 import { Suspense } from 'react';
+import Note from '../../../../components/Note';
+import NoteHeaderControl from '../../../../components/NoteHeaderControl';
 import NoteHeaderControlMobile from '../../../../components/NoteHeaderControlMobile';
+import NoteLoading from '../../../../components/NoteLoading';
 
 interface generateMetadataProps {
   params: Promise<{ id: string; tag: string }>;
@@ -36,13 +37,7 @@ const TagNotePage = async ({ params }: TagNotePageProps) => {
       <NoteHeaderControlMobile id={id} tag={tag} />
       <NoteHeaderControl id={id} tag={tag} />
 
-      <Suspense
-        fallback={
-          <p className="text-sm text-neutral-700 dark:text-neutral-300">
-            Loading note...
-          </p>
-        }
-      >
+      <Suspense fallback={<NoteLoading />}>
         <Note id={id} />
       </Suspense>
     </main>

@@ -1,6 +1,7 @@
 import DesktopRedirect from '@/app/components/DesktopRedirect';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import NotesListMobileLoading from '../..//components/NotesListMobileLoading';
 import CreateNewNoteButton from '../../components/CreateNewNoteButton';
 import NotesListMobile from '../../components/NotesListMobile';
 
@@ -19,13 +20,8 @@ export default async function Home() {
           All your archived notes are stored here. You can restore or delete
           them anytime.
         </p>
-        <Suspense
-          fallback={
-            <p className="text-sm text-neutral-700 dark:text-neutral-300">
-              Loading archived notes...
-            </p>
-          }
-        >
+
+        <Suspense fallback={<NotesListMobileLoading />}>
           <DesktopRedirect isArchived={true} />
           <NotesListMobile isArchived={true} />
         </Suspense>

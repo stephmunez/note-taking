@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import CreateNewNoteButton from '../CreateNewNoteButton';
 import IconSearch from '../IconSearch';
 import NoteItem from '../NoteItem';
+import NotesListMobileLoading from '../NotesListMobileLoading';
 
 export default function Search() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -67,9 +68,7 @@ export default function Search() {
       </div>
 
       {loading ? (
-        <p className="text-sm text-neutral-700 dark:text-neutral-300">
-          Loading notes...
-        </p>
+        <NotesListMobileLoading isSearch={true} />
       ) : (
         <>
           {searchTerm && (
