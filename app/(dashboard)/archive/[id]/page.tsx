@@ -1,8 +1,9 @@
-import NoteHeaderControl from '@/app/components/NoteHeaderControl';
 import { createClient } from '@/utils/supabase/server';
 import { Suspense } from 'react';
 import Note from '../../../components/Note';
+import NoteHeaderControl from '../../../components/NoteHeaderControl';
 import NoteHeaderControlMobile from '../../../components/NoteHeaderControlMobile';
+import NoteLoading from '../../../components/NoteLoading';
 
 interface generateMetadataProps {
   params: Promise<{ id: string }>;
@@ -35,13 +36,7 @@ const ArchivedNote = async ({ params }: ArchivedNoteProps) => {
     <main className="flex min-h-[calc(100vh-108px)] w-full flex-col gap-3 rounded-t-lg bg-neutral-0 px-4 py-5 dark:bg-neutral-950 md:min-h-[calc(100vh-148px)] md:gap-4 md:px-6 lg:max-h-[calc(100vh-89px)] lg:min-h-[calc(100vh-89px)] lg:flex-row-reverse lg:rounded-none lg:py-0">
       <NoteHeaderControlMobile id={id} isArchived={true} />
       <NoteHeaderControl id={id} isArchived={true} />
-      <Suspense
-        fallback={
-          <p className="text-sm text-neutral-700 dark:text-neutral-300">
-            Loading note...
-          </p>
-        }
-      >
+      <Suspense fallback={<NoteLoading />}>
         <Note id={id} />
       </Suspense>
     </main>

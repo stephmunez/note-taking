@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import IconClock from '../IconClock';
 import IconTag from '../IconTag';
+import NoteLoading from '../NoteLoading';
 import { Toast, ToastContainer } from '../Toast';
 
 interface EditNoteProps {
@@ -236,11 +237,7 @@ const EditNote = ({ id, isArchive }: EditNoteProps) => {
     : '';
 
   if (loading) {
-    return (
-      <p className="text-sm text-neutral-700 dark:text-neutral-300">
-        Loading note...
-      </p>
-    );
+    return <NoteLoading />;
   }
 
   if (error) {

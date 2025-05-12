@@ -3,6 +3,7 @@
 import { createClient } from '@/utils/supabase/client';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import ChangePasswordLoading from '../ChangePasswordLoading';
 import IconHidePassword from '../IconHidePassword';
 import IconInfo from '../IconInfo';
 import IconShowPassword from '../IconShowPassword';
@@ -216,9 +217,7 @@ const ChangePasswordForm = () => {
   return (
     <div className="flex w-full flex-col gap-5 md:gap-6">
       {fetchingUser ? (
-        <p className="text-sm text-neutral-700 dark:text-neutral-300">
-          Loading user...
-        </p>
+        <ChangePasswordLoading />
       ) : (
         <>
           <form

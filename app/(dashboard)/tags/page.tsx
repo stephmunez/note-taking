@@ -1,7 +1,8 @@
-import TagsList from '@/app/components/TagsList';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import CreateNewNoteButton from '../../components/CreateNewNoteButton';
+import TagsList from '../../components/TagsList';
+import TagsListLoading from '../../components/TagsListLoading';
 
 export const metadata: Metadata = {
   title: 'Notes Taking | Tags',
@@ -14,13 +15,8 @@ export default async function Home() {
         <h1 className="text-2xl font-bold leading-[1.2] tracking-[-0.5px]">
           Tags
         </h1>
-        <Suspense
-          fallback={
-            <p className="text-sm text-neutral-700 dark:text-neutral-300">
-              Loading tags...
-            </p>
-          }
-        >
+
+        <Suspense fallback={<TagsListLoading />}>
           <TagsList />
         </Suspense>
       </div>

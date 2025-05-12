@@ -4,6 +4,7 @@ import { getClientNotes } from '@/lib/clientNotes';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TagItem from '../TagItem';
+import TagsListLoading from '../TagsListLoading';
 
 const NavigationTagsList = () => {
   const [uniqueTags, setUniqueTags] = useState<string[]>([]);
@@ -34,12 +35,7 @@ const NavigationTagsList = () => {
     fetchTags();
   }, []);
 
-  if (loading)
-    return (
-      <p className="text-sm text-neutral-700 dark:text-neutral-300">
-        Loading tags...
-      </p>
-    );
+  if (loading) return <TagsListLoading />;
 
   return (
     <>

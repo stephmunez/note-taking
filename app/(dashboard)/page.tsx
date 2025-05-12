@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import CreateNewNoteButton from '../components/CreateNewNoteButton';
 import DesktopRedirect from '../components/DesktopRedirect';
 import NotesListMobile from '../components/NotesListMobile';
+import NotesListMobileLoading from '../components/NotesListMobileLoading';
 
 export const metadata: Metadata = {
   title: 'Notes Taking | Home',
@@ -16,13 +17,7 @@ export default async function Home() {
           <h1 className="text-2xl font-bold leading-[1.2] tracking-[-0.5px] lg:hidden">
             All Notes
           </h1>
-          <Suspense
-            fallback={
-              <p className="text-sm text-neutral-700 dark:text-neutral-300 lg:pl-8 lg:pt-5">
-                Loading notes...
-              </p>
-            }
-          >
+          <Suspense fallback={<NotesListMobileLoading />}>
             <DesktopRedirect />
             <NotesListMobile />
           </Suspense>
