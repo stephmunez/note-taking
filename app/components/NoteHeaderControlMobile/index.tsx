@@ -169,7 +169,7 @@ const NoteHeaderControlMobile = ({
           onActionComplete={(success) => {
             if (success) {
               showNotification('Note permanently deleted.', 'success');
-              setTimeout(() => router.push('/'), 1500);
+              setTimeout(() => router.replace('/'), 1500);
             } else {
               showNotification('Failed to delete note', 'error');
             }
